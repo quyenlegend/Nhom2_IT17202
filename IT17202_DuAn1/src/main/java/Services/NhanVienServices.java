@@ -3,10 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Services;
-
 import DomainModels.NhanVien;
 import Repositories.NhanVien_Mapped;
 import ViewModels.NhanVien_Model;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,16 +26,22 @@ public class NhanVienServices {
     }
 
     public String add(NhanVien_Model nv) {
-        return nhanVien_Mapped.add(new NhanVien(nv.getMaNV(), nv.getTenNV(), nv.getGioiTinh(),
-                nv.getSDT(), nv.getChucVu(), nv.getMatKhau(), nv.getEmail(), nv.getDiaChi(), nv.getTrangThai()));
+        return nhanVien_Mapped.add(new NhanVien(nv.getMaNV(), nv.getTenNV(), nv.isGioiTinh(),
+                nv.getSDT(), nv.getChucVu(), nv.getMatKhau(), nv.getEmail(), nv.getDiaChi(), nv.isTrangThai()));
     }
 
     public String edit(NhanVien_Model nv) {
-        return nhanVien_Mapped.edit(new NhanVien(nv.getMaNV(), nv.getTenNV(), nv.getGioiTinh(),
-                nv.getSDT(), nv.getChucVu(), nv.getMatKhau(), nv.getEmail(), nv.getDiaChi(), nv.getTrangThai()));
+        return nhanVien_Mapped.edit(new NhanVien(nv.getMaNV(), nv.getTenNV(), nv.isGioiTinh(),
+                nv.getSDT(), nv.getChucVu(), nv.getMatKhau(), nv.getEmail(), nv.getDiaChi(), nv.isTrangThai()));
+    }
+    public List<NhanVien> find(String ma){
+        List<NhanVien> nv = new ArrayList<>();
+        for (NhanVien x : nhanVien_Mapped.getList()) {
+            if (x.getMaNV().toLowerCase().contains(ma.toLowerCase()) || x.getTenNV().toLowerCase().contains(ma.toLowerCase())) {
+                nv.add(x);
+            }
+        }
+        return nv;
     }
 
-//    public String timKiemTheoTen(NhanVien_Model nv) {
-//        return nhanVien_Mapped.findByTen(new NhanVien(MaNV, TenNV, 0, SDT, 0, MatKhau, Email, DiaChi, 0));
-//    }
 }

@@ -6,6 +6,7 @@ package Views;
 import Services.NhanVienServices;
 import java.util.List;
 import DomainModels.NhanVien;
+import javax.swing.JOptionPane;
 /**
  *
  * @author s2ngo
@@ -18,8 +19,19 @@ public class LoginDialog extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }
     public void login(List<NhanVien> nv){
-        String manv = txt_Username.getText();
-        String password = new String(txt_Password.getPassword());
+        MainJFrame main = new MainJFrame();
+        for (NhanVien x : nv) {
+            if (!txt_Username.getText().equals(x.getMaNV())) {
+                if (!txt_Password.getText().equals(x.getMatKhau())) {
+                    JOptionPane.showMessageDialog(this, "Sai tên đăng nhập hoặc mật khẩu");
+                    return;
+                }
+            } else {
+                this.dispose();
+                main.setVisible(true);
+                return;
+            }
+        }
     }
 //    public void dangNhap(List<NhanVien> nv){
 //        Main main = new Main();
@@ -57,6 +69,7 @@ public class LoginDialog extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 51, 51));
         jLabel1.setText("DANG NHAP");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -66,6 +79,7 @@ public class LoginDialog extends javax.swing.JDialog {
         jLabel3.setText("Password: ");
 
         btn_Login.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btn_Login.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Login.png"))); // NOI18N
         btn_Login.setText("LOGIN");
         btn_Login.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -74,6 +88,7 @@ public class LoginDialog extends javax.swing.JDialog {
         });
 
         btn_Exit.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btn_Exit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Exit.png"))); // NOI18N
         btn_Exit.setText("EXIT");
         btn_Exit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -131,11 +146,11 @@ public class LoginDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_LoginActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_btn_LoginActionPerformed
 
     private void btn_ExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ExitActionPerformed
-        // TODO add your handling code here:
+        System.exit(0);
     }//GEN-LAST:event_btn_ExitActionPerformed
 
     /**

@@ -5,6 +5,7 @@
 package Repositories;
 import DomainModels.NhanVien;
 import Utilities.HibernateUtili;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.TypedQuery;
 import org.hibernate.Session;
@@ -18,7 +19,7 @@ public class NhanVien_Mapped {
     public List<NhanVien> getList(){
         List<NhanVien> nhanViens;
         try(Session session = HibernateUtili.getSessionFactory().openSession()){
-            TypedQuery<NhanVien> query = session.createQuery("select c from NHANVIEN c");
+            TypedQuery<NhanVien> query = session.createQuery("from NHANVIEN");
             nhanViens = query.getResultList();
         }
         return nhanViens;
@@ -53,26 +54,5 @@ public class NhanVien_Mapped {
         }
         return "Sua Khong Thanh Cong";
     }
-    public List<NhanVien> findByTen(String ten){
-        try(Session session = HibernateUtili.getSessionFactory().openSession()){
-            Transaction transaction = session.getTransaction();
-            transaction.begin();
-            try {
-                if (ten == null) {
-                    ten = "&";
-                }else{
-                    ten = "&" + ten + "&";
-                }
-                Query query = session.createQuery("from NHANVIEN where TenNV like: ten");
-                query.setParameter("ten", ten);
-                List<NhanVien> lst = query.list();
-                session.getTransaction().commit();
-                session.close();
-                return lst;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return null;
-    }
+    
 }

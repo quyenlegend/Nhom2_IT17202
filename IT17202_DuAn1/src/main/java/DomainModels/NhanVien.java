@@ -13,24 +13,23 @@ import javax.persistence.Table;
  *
  * @author s2ngo
  */
-@Entity
-@Table(name = "NHANVIEN")
+@Entity(name = "NHANVIEN")
 public class NhanVien implements Serializable{
     @Id
     private String MaNV;
     private String TenNV;
-    private int GioiTinh;
+    private boolean GioiTinh;
     private String SDT;
     private int ChucVu;
     private String MatKhau;
     private String Email;
     private String DiaChi;
-    private int TrangThai;
+    private boolean TrangThai;
 
     public NhanVien() {
     }
 
-    public NhanVien(String MaNV, String TenNV, int GioiTinh, String SDT, int ChucVu, String MatKhau, String Email, String DiaChi, int TrangThai) {
+    public NhanVien(String MaNV, String TenNV, boolean GioiTinh, String SDT, int ChucVu, String MatKhau, String Email, String DiaChi, boolean TrangThai) {
         this.MaNV = MaNV;
         this.TenNV = TenNV;
         this.GioiTinh = GioiTinh;
@@ -58,11 +57,11 @@ public class NhanVien implements Serializable{
         this.TenNV = TenNV;
     }
 
-    public int getGioiTinh() {
+    public boolean isGioiTinh() {
         return GioiTinh;
     }
 
-    public void setGioiTinh(int GioiTinh) {
+    public void setGioiTinh(boolean GioiTinh) {
         this.GioiTinh = GioiTinh;
     }
 
@@ -106,13 +105,12 @@ public class NhanVien implements Serializable{
         this.DiaChi = DiaChi;
     }
 
-    public int getTrangThai() {
+    public boolean isTrangThai() {
         return TrangThai;
     }
 
-    public void setTrangThai(int TrangThai) {
+    public void setTrangThai(boolean TrangThai) {
         this.TrangThai = TrangThai;
     }
-
-   
+          
 }

@@ -3,14 +3,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Applications;
-import Views.MainJPanel;
+import Views.MainJFrame;
 /**
  *
  * @author s2ngo
  */
 public class NewMain {
     public static void main(String[] args) {
-        new MainJPanel().setVisible(true);
+        new MainJFrame().setVisible(true);
         
     }
 }
