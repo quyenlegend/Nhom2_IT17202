@@ -37,11 +37,13 @@ public class SanphamService implements ISanphamService{
     }
 
     @Override
-    public QLSanPham getProductById(String id) {
+    public List<QLSanPham> getProductById(String id) {
         var x = spRepository.findById(id);
-    return new QLSanPham(x.getMaSP(), x.getHangSXId(), x.getTheLoaiID(), x.getMaSizeId()
+        List<QLSanPham> listById = new ArrayList<>();
+        listById.add( new QLSanPham(x.getMaSP(), x.getHangSXId(), x.getTheLoaiID(), x.getMaSizeId()
             ,x.getMauSacId(),x.getTenSP(),x.getNgayNhap(),x.getGia(),x.getSoLuong(),x.getAnh(),x.isTrangThai()
-            );
+            ));
+        return listById;
     }
 
     @Override
@@ -66,5 +68,17 @@ public class SanphamService implements ISanphamService{
                 x.getMauSacId(),x.getTenSP(),x.getNgayNhap(),x.getGia(),x.getSoLuong(),x.getAnh(),x.isTrangThai()
         );
     }
+
+    @Override
+    public QLSanPham getProductByMaMS(int MaMS) {
+        var x = spRepository.findByMS(MaMS);
+    return new QLSanPham(x.getMaSP(), x.getHangSXId(), x.getTheLoaiID(), x.getMaSizeId()
+            ,x.getMauSacId(),x.getTenSP(),x.getNgayNhap(),x.getGia(),x.getSoLuong(),x.getAnh(),x.isTrangThai()
+            );
+    }
+
+    
+
+    
     
 }

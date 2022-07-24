@@ -9,9 +9,11 @@ import entities.MauSac;
 import entities.Size;
 import entities.TheLoai;
 import java.awt.Image;
+import java.awt.event.ItemEvent;
 import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -46,6 +48,7 @@ public class QLySanpham extends javax.swing.JFrame {
     private final IMauSacService msService;
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/YYYY");
     
+    
     /**
      * Creates new form QLySanpham
      */
@@ -62,6 +65,8 @@ public class QLySanpham extends javax.swing.JFrame {
         loadDataToComBoHang();
         loadDataToComBoMS();
         loadDataToComBoTL();
+        //loadComBoMS();
+        //chkTimKiemItemStateChanged(evt);
     }
 
     private void loadDataToTable() {
@@ -76,11 +81,11 @@ public class QLySanpham extends javax.swing.JFrame {
                 product.getMaSizeId(),
                 product.getMauSacId(),
                 product.getTenSP(),
-                product.getNgayNhap(),
+                dateFormat.format(product.getNgayNhap()),
                 product.getGia(),
                 product.getSoLuong(),
                 product.getAnh(),
-                product.isTrangThai()//==0?"Active":"Inactive"
+                product.isTrangThai()//==?"Active":"Inactive"
             };
             
             dtm.addRow(rowData);
@@ -104,11 +109,16 @@ public class QLySanpham extends javax.swing.JFrame {
         List<MauSac> mau = msService.getAllMauSac();
         cboMS.setModel(new DefaultComboBoxModel((mau.toArray())));
     }
+    private void loadComBoMS(){
+        List<MauSac> mau = msService.getAllMauSac();
+        cboTimMS.setModel(new DefaultComboBoxModel((mau.toArray())));
+    }
+    
     
     private int findIndexComboboxById(int id) {
 //        int total = this.cboTL.getMaximumRowCount();
 //        for(int i = 0; i < total; i++) {
-//            TheLoai theLoai = this.cboTL.getItemAt(i);
+//           TheLoai theLoai = String.valueOf(this.cboTL.getItemAt(i));
 //            if (id == theLoai.getMaTL()) {
 //                return i;
 //            }
@@ -143,7 +153,7 @@ public class QLySanpham extends javax.swing.JFrame {
         qlProduct.setSoLuong(proSoLuong);
         //trạng thái
         boolean trangthai = false;
-        if(rdoActive.isSelected()){
+        if(rdoINActive.isSelected()){
             trangthai = true;
         }
         qlProduct.setTrangThai(trangthai);
@@ -163,9 +173,9 @@ public class QLySanpham extends javax.swing.JFrame {
         return qlProduct;
     }
     
-    private int getSanPhamIdFromSelectedRow() {
+    private String getSanPhamIdFromSelectedRow() {
         int selectedRowIndex = tblSanPham.getSelectedRow();
-        return Integer.parseInt(tblSanPham.getValueAt(selectedRowIndex, 0).toString());
+        return String.valueOf(tblSanPham.getValueAt(selectedRowIndex, 0).toString());
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -180,13 +190,13 @@ public class QLySanpham extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jCheckBox2 = new javax.swing.JCheckBox();
-        jTextField1 = new javax.swing.JTextField();
-        jCheckBox3 = new javax.swing.JCheckBox();
-        jCheckBox4 = new javax.swing.JCheckBox();
-        jCheckBox5 = new javax.swing.JCheckBox();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        chkTimKiem = new javax.swing.JCheckBox();
+        chkTimMa = new javax.swing.JCheckBox();
+        txtTimMa = new javax.swing.JTextField();
+        chkTimMS = new javax.swing.JCheckBox();
+        chkTimTen = new javax.swing.JCheckBox();
+        chkTimSize = new javax.swing.JCheckBox();
+        cboTimSize = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblSanPham = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
@@ -214,8 +224,8 @@ public class QLySanpham extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
-        jTextField8 = new javax.swing.JTextField();
-        jComboBox5 = new javax.swing.JComboBox<>();
+        txtTimTen = new javax.swing.JTextField();
+        cboTimMS = new javax.swing.JComboBox<>();
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
@@ -223,8 +233,8 @@ public class QLySanpham extends javax.swing.JFrame {
         jButton10 = new javax.swing.JButton();
         jButton11 = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
+        rdoINActive = new javax.swing.JRadioButton();
         rdoActive = new javax.swing.JRadioButton();
-        rdoInactive = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -256,15 +266,25 @@ public class QLySanpham extends javax.swing.JFrame {
 
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Quản Lý Sản Phẩm", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 18))); // NOI18N
 
-        jCheckBox1.setText("Tìm Kiếm");
+        chkTimKiem.setText("Tìm Kiếm");
+        chkTimKiem.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                chkTimKiemItemStateChanged(evt);
+            }
+        });
 
-        jCheckBox2.setText("Theo Mã");
+        chkTimMa.setText("Theo Mã");
 
-        jCheckBox3.setText("Theo Màu Sắc");
+        chkTimMS.setText("Theo Màu Sắc");
+        chkTimMS.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                chkTimMSItemStateChanged(evt);
+            }
+        });
 
-        jCheckBox4.setText("Theo Tên");
+        chkTimTen.setText("Theo Tên");
 
-        jCheckBox5.setText("Theo Size");
+        chkTimSize.setText("Theo Size");
 
         tblSanPham.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -342,7 +362,18 @@ public class QLySanpham extends javax.swing.JFrame {
 
         jButton4.setText("jButton4");
 
-        jButton5.setText("jButton5");
+        jButton5.setText("Tìm Kiếm");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        cboTimMS.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cboTimMSItemStateChanged(evt);
+            }
+        });
 
         jButton6.setText("jButton6");
 
@@ -358,11 +389,11 @@ public class QLySanpham extends javax.swing.JFrame {
 
         jLabel10.setText("Trạng Thái");
 
+        buttonGroup1.add(rdoINActive);
+        rdoINActive.setText("Inactive");
+
         buttonGroup1.add(rdoActive);
         rdoActive.setText("Active");
-
-        buttonGroup1.add(rdoInactive);
-        rdoInactive.setText("Inactive");
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -439,32 +470,32 @@ public class QLySanpham extends javax.swing.JFrame {
                                 .addComponent(jLabel10)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(rdoActive)
-                                    .addComponent(rdoInactive))
+                                    .addComponent(rdoINActive)
+                                    .addComponent(rdoActive))
                                 .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1)
                             .addGroup(jPanel6Layout.createSequentialGroup()
                                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jCheckBox1)
+                                    .addComponent(chkTimKiem)
                                     .addGroup(jPanel6Layout.createSequentialGroup()
                                         .addGap(21, 21, 21)
-                                        .addComponent(jCheckBox2)
+                                        .addComponent(chkTimMa)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtTimMa, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jCheckBox4)
+                                        .addComponent(chkTimTen)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtTimTen, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jCheckBox3)
+                                        .addComponent(chkTimMS)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(cboTimMS, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jCheckBox5)
+                                        .addComponent(chkTimSize)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(cboTimSize, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(0, 38, Short.MAX_VALUE)))
                         .addContainerGap())))
         );
@@ -472,17 +503,17 @@ public class QLySanpham extends javax.swing.JFrame {
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jCheckBox1)
+                .addComponent(chkTimKiem)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCheckBox2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jCheckBox3)
-                    .addComponent(jCheckBox4)
-                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jCheckBox5)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(chkTimMa)
+                    .addComponent(txtTimMa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(chkTimMS)
+                    .addComponent(chkTimTen)
+                    .addComponent(txtTimTen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cboTimMS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(chkTimSize)
+                    .addComponent(cboTimSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -544,14 +575,14 @@ public class QLySanpham extends javax.swing.JFrame {
                             .addComponent(jLabel8)
                             .addComponent(txtDonGia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel10)
-                            .addComponent(rdoActive))
+                            .addComponent(rdoINActive))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel9)
                                 .addComponent(txtNgayNhap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                                .addComponent(rdoInactive)
+                                .addComponent(rdoActive)
                                 .addContainerGap())))))
         );
 
@@ -603,6 +634,7 @@ public class QLySanpham extends javax.swing.JFrame {
         txtNgayNhap.setText(NgayNhap);
         txtDonGia.setText(DonGia);
         txtSoluong.setText(SoLuong);
+        cboTL.setSelectedItem(theLoai);
         
     }//GEN-LAST:event_tblSanPhamMouseClicked
 
@@ -648,7 +680,7 @@ public class QLySanpham extends javax.swing.JFrame {
         QLSanPham updatedProduct = null;
         try {
             updatedProduct = getSanPhamFromInput();
-            int updatedProductId = getSanPhamIdFromSelectedRow();
+            String updatedProductId = getSanPhamIdFromSelectedRow();
             updatedProduct.setMaSP(String.valueOf(updatedProductId));
             if (ProductService.updateProductById(updatedProduct) != null) {
             JOptionPane.showMessageDialog(this, "Thành công");
@@ -663,6 +695,82 @@ public class QLySanpham extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void chkTimKiemItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chkTimKiemItemStateChanged
+        // TODO add your handling code here:
+        if(evt.getStateChange() == ItemEvent.SELECTED){
+            chkTimMa.setVisible(true);
+            txtTimMa.setVisible(true);
+            chkTimTen.setVisible(true);
+            txtTimTen.setVisible(true);
+            chkTimMS.setVisible(true);
+            cboTimMS.setVisible(true);
+            chkTimSize.setVisible(true);
+            cboTimSize.setVisible(true);
+        }else{
+            chkTimMa.setVisible(false);
+            txtTimMa.setVisible(false);
+            chkTimTen.setVisible(false);
+            txtTimTen.setVisible(false);
+            chkTimMS.setVisible(false);
+            cboTimMS.setVisible(false);
+            chkTimSize.setVisible(false);
+            cboTimSize.setVisible(false);
+        }
+    }//GEN-LAST:event_chkTimKiemItemStateChanged
+
+    private void chkTimMSItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chkTimMSItemStateChanged
+        // TODO add your handling code here:
+        if(evt.getStateChange() == ItemEvent.SELECTED){
+            //cboTimMS.setVisible(true);
+            loadComBoMS();
+        }
+    }//GEN-LAST:event_chkTimMSItemStateChanged
+
+    private void cboTimMSItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboTimMSItemStateChanged
+        // TODO add your handling code here:
+        
+        try {
+            int MaMS= cboTimMS.getSelectedIndex();
+            if(ProductService.getProductByMaMS(MaMS) != null){
+                loadDataToTable();
+            }
+            
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_cboTimMSItemStateChanged
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        String MaSP = txtTimMa.getText();
+        if(MaSP.length()==0){
+            loadDataToTable();
+        }else{
+        List<QLSanPham> ds = ProductService.getProductById(MaSP);
+        DefaultTableModel dtm = (DefaultTableModel) this.tblSanPham.getModel();
+        dtm.setRowCount(0);
+        for (QLSanPham product : ds) {
+            Object[] rowData = {
+                product.getMaSP(),
+                product.getHangSXId(),
+                product.getTheLoaiID(),
+                product.getMaSizeId(),
+                product.getMauSacId(),
+                product.getTenSP(),
+                dateFormat.format(product.getNgayNhap()),
+                product.getGia(),
+                product.getSoLuong(),
+                product.getAnh(),
+                product.isTrangThai()//==?"Active":"Inactive"
+            };
+            
+            dtm.addRow(rowData);
+        }
+    }
+        
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -706,6 +814,13 @@ public class QLySanpham extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cboMS;
     private javax.swing.JComboBox<String> cboSize;
     private javax.swing.JComboBox<String> cboTL;
+    private javax.swing.JComboBox<String> cboTimMS;
+    private javax.swing.JComboBox<String> cboTimSize;
+    private javax.swing.JCheckBox chkTimKiem;
+    private javax.swing.JCheckBox chkTimMS;
+    private javax.swing.JCheckBox chkTimMa;
+    private javax.swing.JCheckBox chkTimSize;
+    private javax.swing.JCheckBox chkTimTen;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton2;
@@ -716,13 +831,6 @@ public class QLySanpham extends javax.swing.JFrame {
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JCheckBox jCheckBox3;
-    private javax.swing.JCheckBox jCheckBox4;
-    private javax.swing.JCheckBox jCheckBox5;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -738,16 +846,16 @@ public class QLySanpham extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField8;
     private javax.swing.JLabel lblAnh;
     private javax.swing.JRadioButton rdoActive;
-    private javax.swing.JRadioButton rdoInactive;
+    private javax.swing.JRadioButton rdoINActive;
     private javax.swing.JTable tblSanPham;
     private javax.swing.JTextField txtDonGia;
     private javax.swing.JTextField txtMaSP;
     private javax.swing.JTextField txtNgayNhap;
     private javax.swing.JTextField txtSoluong;
     private javax.swing.JTextField txtTenSP;
+    private javax.swing.JTextField txtTimMa;
+    private javax.swing.JTextField txtTimTen;
     // End of variables declaration//GEN-END:variables
 }

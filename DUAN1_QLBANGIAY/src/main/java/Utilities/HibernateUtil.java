@@ -32,7 +32,7 @@ public class HibernateUtil {
 
           return metadata.getSessionFactoryBuilder().build();
       } catch (Throwable ex) {
-          System.err.println("Initial SessionFactory creation failed." + ex);
+          System.err.println("Không tạo được SessionFactory ban đầu." + ex);
           throw new ExceptionInInitializerError(ex);
       }
   }

@@ -75,12 +75,22 @@ public class SanPhamRepository implements ISanPhamRepository{
 
     @Override
     public SanPham findByMS(int MaMS) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        SanPham sanpham;
+       try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "SELECT p FROM SANPHAM p WHERE p.MaMS = :MaMS ";
+            TypedQuery<SanPham> query = session.createQuery(hql, SanPham.class);
+            query.setParameter("MaMS", MaMS);
+            sanpham = query.getSingleResult();
+        }
+        return sanpham;
     }
 
     @Override
     public SanPham findBYSize(int MaSize) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+
     
-}
+    }
+    
+

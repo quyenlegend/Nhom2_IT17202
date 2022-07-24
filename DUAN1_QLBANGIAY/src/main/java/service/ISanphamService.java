@@ -4,6 +4,7 @@
  */
 package service;
 
+import entities.SanPham;
 import java.util.List;
 import model.QLSanPham;
 
@@ -14,7 +15,10 @@ import model.QLSanPham;
 public interface ISanphamService {
     List<QLSanPham> getProducts();
     
-    QLSanPham getProductById(String id);
+    //QLSanPham getProductById(String id);
+     List<QLSanPham>getProductById(String id);
+    
+    QLSanPham getProductByMaMS(int MaMS);
     
     QLSanPham createNewProduct(QLSanPham product);
     
