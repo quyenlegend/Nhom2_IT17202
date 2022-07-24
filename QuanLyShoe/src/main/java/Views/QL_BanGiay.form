@@ -479,6 +479,11 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
+                                      <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="txt_TienKhachDua" min="-2" pref="136" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                                           <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -491,11 +496,6 @@
                                               <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="txt_TongDua" min="-2" pref="136" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
@@ -523,9 +523,9 @@
                               <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                               <Component id="btn_TaoDon" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
-                              <Component id="jButton8" min="-2" max="-2" attributes="0"/>
+                              <Component id="btn_ThanhToan" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="jButton9" max="32767" attributes="0"/>
+                              <Component id="btn_HuyDon" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace pref="32" max="32767" attributes="0"/>
@@ -566,7 +566,7 @@
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="txt_TongDua" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txt_TienKhachDua" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="txt_ThanhTien" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -578,8 +578,8 @@
                       </Group>
                       <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jButton8" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
-                          <Component id="jButton9" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
+                          <Component id="btn_ThanhToan" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
+                          <Component id="btn_HuyDon" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
                           <Component id="btn_TaoDon" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -625,7 +625,7 @@
             </Component>
             <Component class="javax.swing.JTextField" name="txt_MaHD">
             </Component>
-            <Component class="javax.swing.JTextField" name="txt_TongDua">
+            <Component class="javax.swing.JTextField" name="txt_TienKhachDua">
             </Component>
             <Component class="javax.swing.JTextField" name="txt_TienThua">
             </Component>
@@ -635,7 +635,7 @@
             </Component>
             <Component class="javax.swing.JTextField" name="txt_SDT">
             </Component>
-            <Component class="javax.swing.JButton" name="jButton8">
+            <Component class="javax.swing.JButton" name="btn_ThanhToan">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="33" green="66" red="ff" type="rgb"/>
@@ -651,8 +651,11 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Thanh To&#xe1;n"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_ThanhToanActionPerformed"/>
+              </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton9">
+            <Component class="javax.swing.JButton" name="btn_HuyDon">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="33" green="66" red="ff" type="rgb"/>
@@ -668,6 +671,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="H&#x1ee7;y &#x110;&#x1a1;n"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_HuyDonActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btn_TaoDon">
               <Properties>
@@ -787,18 +793,25 @@
                       <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tbl_hoaDonMouseClicked"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
             <Component class="javax.swing.JComboBox" name="cbc_TrangThai">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="2">
-                    <StringItem index="0" value="Ch&#x1b0;a Ho&#xe0;n Th&#xe0;nh"/>
-                    <StringItem index="1" value="Ho&#xe0;n Th&#xe0;nh"/>
+                  <StringArray count="3">
+                    <StringItem index="0" value="Tr&#x1ea1;ng Th&#xe1;i"/>
+                    <StringItem index="1" value="Ch&#x1b0;a Ho&#xe0;n Th&#xe0;nh"/>
+                    <StringItem index="2" value="Ho&#xe0;n Th&#xe0;nh"/>
                   </StringArray>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="cbc_TrangThaiItemStateChanged"/>
+              </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>

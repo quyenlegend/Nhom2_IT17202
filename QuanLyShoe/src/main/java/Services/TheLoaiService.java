@@ -38,7 +38,12 @@ public class TheLoaiService implements InterfaceService<TheLoaiModel>{
 
     @Override
     public int deleteById(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code
+    
+}
+
+    @Override
+    public List<TheLoaiModel> getIDnhieu(String id, String s, String m) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
 }

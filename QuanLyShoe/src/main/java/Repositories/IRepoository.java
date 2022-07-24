@@ -18,5 +18,6 @@ public interface IRepoository< KeyType> {
     public KeyType save(KeyType KeyType);
     
     public  int delete(int id);
+    public KeyType findById (String id ,String Size, String Mau );
     
 }

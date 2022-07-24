@@ -4,6 +4,7 @@
  */
 package Views;
 
+import Services.HoaDonService;
 import Services.InterfaceService;
 import Services.SanPhamService;
 import ViewModels.ChiTietHoaDonModel;
@@ -20,31 +21,36 @@ import javax.swing.table.DefaultTableModel;
  * @author boquy
  */
 public class QL_BanGiay extends javax.swing.JFrame {
-
+    String maSP;
     int i;
     int j;
+    int c;
     InterfaceService<SanPhamModel> _InterfService;
+    InterfaceService<HoaDonModel> _InterfHDmodel;
 
     DefaultTableModel _tableSanPham;
     DefaultTableModel _tableHoaDon;
     DefaultTableModel _tableChiTietHoaDon;
 
     List<HoaDonModel> _listHDModle;
-    List<HoaDonModel> _list_tongHD;
+    List<HoaDonModel> _ListTrangThai;
+    List<HoaDonModel> _listChuaHD;
     List<ChiTietHoaDonModel> _listChiTietHD;
-    List<ChiTietHoaDonModel> _ListChiTietTong;
+    List<ChiTietHoaDonModel> _listTimKiem;
 
     public QL_BanGiay() {
         initComponents();
         _InterfService = new SanPhamService();
+        _InterfHDmodel = new HoaDonService();
 
         _listHDModle = new ArrayList<>();
-        _list_tongHD = new ArrayList<>();
+        _ListTrangThai = new ArrayList<>();
+        _listChuaHD = new ArrayList<>();
         _listChiTietHD = new ArrayList<>();
-        _ListChiTietTong = new ArrayList<>();
-
+        _listTimKiem = new ArrayList<>();
         getModel();
         loadateSanPham();
+
     }
 
     void getModel() {
@@ -61,10 +67,9 @@ public class QL_BanGiay extends javax.swing.JFrame {
 
     // lấy sp lên table sp
     public void loadateSanPham() {
-
         List<SanPhamModel> sp = _InterfService.Select();
         for (SanPhamModel x : sp) {
-            _tableSanPham.addRow(new Object[]{stt(),x.getTenSP(),x.getSizeEntity().getSize(),x.getMauSacEntity().getTenMau(),x.getHangEntity().getTenHang(),x.getTheLoaiEntity().getTenLoai(),x.getSoLuong(),x.getGia()});
+            _tableSanPham.addRow(new Object[]{stt(), x.getTenSP(), x.getSizeEntity().getSize(), x.getMauSacEntity().getTenMau(), x.getHangEntity().getTenHang(), x.getTheLoaiEntity().getTenLoai(), x.getSoLuong(), x.getGia()});
 
         }
     }
@@ -82,24 +87,99 @@ public class QL_BanGiay extends javax.swing.JFrame {
         return j;
     }
 
-
     HoaDonModel GuiHD() {
-        return new HoaDonModel("HD"+ j, JdateChoes.getDate() , "Nuyen Van A",txt_TenKH.getText(), 1);
+        return new HoaDonModel(txt_MaHD.getText(), JdateChoes.getDate(),
+                "Nguyễn Văn A", txt_TenKH.getText(),
+                Float.parseFloat(String.valueOf("1")),
+                Float.parseFloat(String.valueOf("1")),
+                Float.parseFloat(String.valueOf("1")), 1);
+    }
+
+    HoaDonModel GuiHDVsql() {
+        return new HoaDonModel("HD" + j, JdateChoes.getDate(),
+                "Nv1", txt_TenKH.getText(),
+                Float.parseFloat(txt_TienKhachDua.getText()),
+                Float.parseFloat(txt_TienThua.getText()),
+                Float.parseFloat(txt_ThanhTien.getText()), 1);
     }
 
     public void LoadhoaDon() {
         for (HoaDonModel x : _listHDModle) {
-            _tableHoaDon.addRow(new Object[]{sttHD(), x.getMaHD(),x.getMaNV(),  x.getNgayTao(), x.getMaKH(), x.getTrangThai() == 1 ? "Chưa Hoàn Thành" : "Đã Hoàn Thành"});
+            if (x.getTrangThai() == 1) {
+                _tableHoaDon.addRow(new Object[]{sttHD(), x.getMaHD(), x.getMaNV(), x.getTenKH(), "", "Chưa Hoàn Thành"});
+            }
+        }
+    }
+
+    // hoadonchiTiet
+    int stt2() {
+        for (c = 0; c < _tableChiTietHoaDon.getRowCount(); c++) {
+        }
+        return c;
+    }
+
+//    ChiTietHoaDonModel GuiChiTiet() {
+//        int index = tbl_hoaDon.getSelectedRow();
+//        int dex = tbl_sanPham.getSelectedRow();
+//        return new ChiTietHoaDonModel(String.valueOf(tbl_hoaDon.getValueAt(index, 1)), "SP01", Float.parseFloat(String.valueOf(tbl_sanPham.getValueAt(dex, 7))),
+//                Float.parseFloat(String.valueOf("1")),
+//                Float.parseFloat(String.valueOf("22")),
+//                Float.parseFloat(String.valueOf("44")),
+//                Float.parseFloat(String.valueOf("22")),
+//                1);
+//    }
+//
+//    Object[] chiTiet(int soluong) {
+//        int index = tbl_hoaDon.getSelectedRow();
+//        int dex = tbl_sanPham.getSelectedRow();
+//        return new Object[]{tbl_hoaDon.getValueAt(index, 1), "", String.valueOf(tbl_sanPham.getValueAt(dex, 1)),
+//            String.valueOf(tbl_sanPham.getValueAt(dex, 2)),
+//            String.valueOf(tbl_sanPham.getValueAt(dex, 3)),
+//            String.valueOf(tbl_sanPham.getValueAt(dex, 4)),
+//            String.valueOf(tbl_sanPham.getValueAt(dex, 5)),
+//            soluong,
+//            Float.parseFloat(String.valueOf(tbl_sanPham.getValueAt(dex, 7)))};
+//    }
+//    
+//    maSp( String.valueOf(tbl_sanPham.getValueAt(dex, 1)),
+//                        String.valueOf(tbl_sanPham.getValueAt(dex, 2)),
+//                        String.valueOf(tbl_sanPham.getValueAt(dex, 3))),
+    
+    ChiTietHoaDonModel guiChiTietHD(int soLuong) {
+        int index = tbl_hoaDon.getSelectedRow();
+        int dex = tbl_sanPham.getSelectedRow();
+        return new ChiTietHoaDonModel(String.valueOf(tbl_hoaDon.getValueAt(index, 1)),
+                maSp("adidas","white","42"),
+               
+                
+                String.valueOf(tbl_sanPham.getValueAt(dex, 1)),
+                String.valueOf(tbl_sanPham.getValueAt(dex, 2)),
+                String.valueOf(tbl_sanPham.getValueAt(dex, 3)),
+                String.valueOf(tbl_sanPham.getValueAt(dex, 4)),
+                String.valueOf(tbl_sanPham.getValueAt(dex, 5)),
+                soLuong,
+                Float.parseFloat(String.valueOf(tbl_sanPham.getValueAt(dex, 7))));
+        
+    }
+
+    void loadchiTiet() {
+        for (ChiTietHoaDonModel x : _listChiTietHD) {
+            _tableChiTietHoaDon.addRow(new Object[]{stt2(),x.getMaSP(), x.getTenSP(), x.getSize(), x.getMau(), x.getTenHang(), x.getTheLoai(), x.getSoLuong(), x.getGia()});
+
         }
 
     }
+    
+       String maSp( String a , String b , String c ){
+              List<SanPhamModel> sp = _InterfService.getIDnhieu(a, b, c);
+         for (SanPhamModel x : sp) {
+             maSP = x.getMaSP();
+         }
+         return maSP;
+           
+     }
+//String MaHD, String MaSP, float Gia, float SoLuong, float TienKhach, float TienMua, float ThanhTien, int TrangThai
 
-    //
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -131,13 +211,13 @@ public class QL_BanGiay extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         txt_MaHD = new javax.swing.JTextField();
-        txt_TongDua = new javax.swing.JTextField();
+        txt_TienKhachDua = new javax.swing.JTextField();
         txt_TienThua = new javax.swing.JTextField();
         txt_TenKH = new javax.swing.JTextField();
         txt_ThanhTien = new javax.swing.JTextField();
         txt_SDT = new javax.swing.JTextField();
-        jButton8 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
+        btn_ThanhToan = new javax.swing.JButton();
+        btn_HuyDon = new javax.swing.JButton();
         btn_TaoDon = new javax.swing.JButton();
         JdateChoes = new com.toedter.calendar.JDateChooser();
         jPanel7 = new javax.swing.JPanel();
@@ -322,17 +402,27 @@ public class QL_BanGiay extends javax.swing.JFrame {
 
         jLabel7.setText("Thành Tiền");
 
-        jButton8.setBackground(new java.awt.Color(255, 102, 51));
-        jButton8.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton8.setForeground(new java.awt.Color(255, 255, 255));
-        jButton8.setIcon(new javax.swing.ImageIcon("E:\\DUAN1\\Nhom2_IT17202\\QuanLyShoe\\src\\main\\java\\IMG\\icons8_payment_history_25px_3.png")); // NOI18N
-        jButton8.setText("Thanh Toán");
+        btn_ThanhToan.setBackground(new java.awt.Color(255, 102, 51));
+        btn_ThanhToan.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btn_ThanhToan.setForeground(new java.awt.Color(255, 255, 255));
+        btn_ThanhToan.setIcon(new javax.swing.ImageIcon("E:\\DUAN1\\Nhom2_IT17202\\QuanLyShoe\\src\\main\\java\\IMG\\icons8_payment_history_25px_3.png")); // NOI18N
+        btn_ThanhToan.setText("Thanh Toán");
+        btn_ThanhToan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_ThanhToanActionPerformed(evt);
+            }
+        });
 
-        jButton9.setBackground(new java.awt.Color(255, 102, 51));
-        jButton9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton9.setForeground(new java.awt.Color(255, 255, 255));
-        jButton9.setIcon(new javax.swing.ImageIcon("E:\\DUAN1\\Nhom2_IT17202\\QuanLyShoe\\src\\main\\java\\IMG\\icons8_delete_25px_2.png")); // NOI18N
-        jButton9.setText("Hủy Đơn");
+        btn_HuyDon.setBackground(new java.awt.Color(255, 102, 51));
+        btn_HuyDon.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btn_HuyDon.setForeground(new java.awt.Color(255, 255, 255));
+        btn_HuyDon.setIcon(new javax.swing.ImageIcon("E:\\DUAN1\\Nhom2_IT17202\\QuanLyShoe\\src\\main\\java\\IMG\\icons8_delete_25px_2.png")); // NOI18N
+        btn_HuyDon.setText("Hủy Đơn");
+        btn_HuyDon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_HuyDonActionPerformed(evt);
+            }
+        });
 
         btn_TaoDon.setBackground(new java.awt.Color(255, 102, 51));
         btn_TaoDon.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -355,6 +445,10 @@ public class QL_BanGiay extends javax.swing.JFrame {
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txt_TienKhachDua, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel6Layout.createSequentialGroup()
                                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel1)
                                     .addComponent(jLabel3))
@@ -363,11 +457,7 @@ public class QL_BanGiay extends javax.swing.JFrame {
                                     .addComponent(txt_MaHD, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel6Layout.createSequentialGroup()
                                         .addComponent(JdateChoes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGap(4, 4, 4))))
-                            .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txt_TongDua, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGap(4, 4, 4)))))
                         .addGap(27, 27, 27)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7)
@@ -388,9 +478,9 @@ public class QL_BanGiay extends javax.swing.JFrame {
                         .addGap(19, 19, 19)
                         .addComponent(btn_TaoDon)
                         .addGap(34, 34, 34)
-                        .addComponent(jButton8)
+                        .addComponent(btn_ThanhToan)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(btn_HuyDon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(32, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
@@ -421,7 +511,7 @@ public class QL_BanGiay extends javax.swing.JFrame {
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
                             .addComponent(jLabel5)
-                            .addComponent(txt_TongDua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_TienKhachDua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txt_ThanhTien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -429,8 +519,8 @@ public class QL_BanGiay extends javax.swing.JFrame {
                     .addComponent(txt_TienThua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_ThanhToan, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_HuyDon, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_TaoDon, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
@@ -448,9 +538,19 @@ public class QL_BanGiay extends javax.swing.JFrame {
                 "Stt", "MaHD", "TênNV", "Tên KH", "Tổng Tiền", "Trạng Thái"
             }
         ));
+        tbl_hoaDon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbl_hoaDonMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(tbl_hoaDon);
 
-        cbc_TrangThai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chưa Hoàn Thành", "Hoàn Thành" }));
+        cbc_TrangThai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Trạng Thái", "Chưa Hoàn Thành", "Hoàn Thành" }));
+        cbc_TrangThai.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbc_TrangThaiItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -524,18 +624,115 @@ public class QL_BanGiay extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_TaoDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_TaoDonActionPerformed
-        // TODO add your handling code here:
+        // Tạo hóa đơn
+        // GUI
         _listHDModle.add(GuiHD());
+        _tableHoaDon.setRowCount(0);
         LoadhoaDon();
-        _listHDModle.clear();
+        // changeTrangThai();
+        _tableChiTietHoaDon.setRowCount(0);
+
+        //SQL
 
     }//GEN-LAST:event_btn_TaoDonActionPerformed
 
     private void tbl_sanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_sanPhamMouseClicked
-        // TODO add your handling code here:
-        if(SwingUtilities.isRightMouseButton(evt))
-            JOptionPane.showConfirmDialog(this, "ok");
+        // click để thêm sp lên hóa đơn chi tiết
+        int chom = JOptionPane.showConfirmDialog(this, "Thêm giày " + String.valueOf(tbl_sanPham.getValueAt(tbl_sanPham.getSelectedRow(), 1)));
+
+        if (chom == 0) {
+
+            if (SwingUtilities.isLeftMouseButton(evt)) {
+                String soluong = JOptionPane.showInputDialog(this, "Nhập Số Lượng");
+                int row = tbl_sanPham.getSelectedRow();
+                _listChiTietHD.add(guiChiTietHD(Integer.parseInt(soluong)));
+                _tableChiTietHoaDon.setRowCount(0);
+                loadchiTiet();
+                tbl_sanPham.setValueAt(Integer.parseInt(String.valueOf(tbl_sanPham.getValueAt(tbl_sanPham.getSelectedRow(), 6))) - Integer.parseInt(soluong), tbl_sanPham.getSelectedRow(), 6);
+            }
+            int index_CT = tbl_chiTietHoaDon.getSelectedRow();
+            float tien = 0;
+            for (int k = 0; k < _tableChiTietHoaDon.getRowCount(); k++) {
+                float tongTien = Float.parseFloat(String.valueOf(tbl_chiTietHoaDon.getValueAt(k, 7))) * Integer.parseInt(String.valueOf(tbl_chiTietHoaDon.getValueAt(k, 6)));
+                tien += tongTien;
+            }
+            txt_ThanhTien.setText(String.valueOf(tien));
+
+        }
     }//GEN-LAST:event_tbl_sanPhamMouseClicked
+
+    private void tbl_hoaDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_hoaDonMouseClicked
+        //load sản phẩm sang bên hóa đơn chi tiết
+        _tableChiTietHoaDon.setRowCount(0);
+        int index = tbl_hoaDon.getSelectedRow();
+        for (ChiTietHoaDonModel x : _listChiTietHD) {
+            if (x.getMaHD() == String.valueOf(tbl_hoaDon.getValueAt(index, 1))) {
+                _listTimKiem.add(x);
+            }
+        }
+        loadNguocLai();
+        _listTimKiem.clear();
+
+    }//GEN-LAST:event_tbl_hoaDonMouseClicked
+
+    private void btn_HuyDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_HuyDonActionPerformed
+        // TODO add your handling code here:
+
+        int index = tbl_hoaDon.getSelectedRow();
+        _tableHoaDon.removeRow(index);
+
+    }//GEN-LAST:event_btn_HuyDonActionPerformed
+
+    private void btn_ThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ThanhToanActionPerformed
+        // Thanh toán
+        // Gui
+        String Thiếu = String.valueOf(Float.parseFloat(txt_ThanhTien.getText()) - Float.parseFloat(txt_TienKhachDua.getText()));
+        if (Float.parseFloat(txt_TienKhachDua.getText()) < Float.parseFloat(txt_ThanhTien.getText())) {
+            JOptionPane.showMessageDialog(this, "Bạn Còn thiếu " + Thiếu);
+            txt_TienKhachDua.requestFocus();
+            return;
+        }
+        txt_TienThua.setText(String.valueOf(Float.parseFloat(txt_TienKhachDua.getText()) - Float.parseFloat(txt_ThanhTien.getText())));
+        int index = tbl_hoaDon.getSelectedRow();
+        _listHDModle.get(index).setTrangThai(2);
+        _tableHoaDon.setRowCount(0);
+        //LoadhoaDon();
+        changeTrangThai();
+       
+
+        // SQL
+         if (_InterfHDmodel.createNew(GuiHDVsql()) != null) {
+            JOptionPane.showMessageDialog(this, "Thêm Thành Công");
+        } else {
+            JOptionPane.showMessageDialog(this, "Thêm Không Công");
+
+        }
+        
+        
+        
+        
+//        
+//        int[] rwos = tbl_NguoiHoc.getSelectedRows();
+//            for (int rwo : rwos) {
+//                _svHocVien.Them(Gui());
+//            }
+
+    }//GEN-LAST:event_btn_ThanhToanActionPerformed
+
+    private void cbc_TrangThaiItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbc_TrangThaiItemStateChanged
+        // TODO add your handling code here:
+
+        int index = cbc_TrangThai.getSelectedIndex();
+        for (HoaDonModel z : _listHDModle) {
+            if (z.getTrangThai() == index) {
+                _ListTrangThai.add(z);
+            }
+        }
+        _tableHoaDon.setRowCount(0);
+        LoadTrangThai();
+        _ListTrangThai.clear();
+
+    }//GEN-LAST:event_cbc_TrangThaiItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -570,9 +767,43 @@ public class QL_BanGiay extends javax.swing.JFrame {
         });
     }
 
+    void loadNguocLai() {
+        for (ChiTietHoaDonModel x : _listTimKiem) {
+            _tableChiTietHoaDon.addRow(new Object[]{stt2(), x.getTenSP(), x.getSize(), x.getMau(), x.getTenHang(), x.getTheLoai(), x.getSoLuong(), x.getGia()});
+
+        }
+    }
+
+    public void LoadTrangThai() {
+        for (HoaDonModel x : _ListTrangThai) {
+            _tableHoaDon.addRow(new Object[]{sttHD(), x.getMaHD(), x.getMaNV(), x.getTenKH(), "", x.getTrangThai() == 2 ? "Đã Hoàn Thành" : "Chưa Hoàn Thành"});
+        }
+    }
+
+    void changeTrangThai() {
+
+        for (HoaDonModel z : _listHDModle) {
+            if (z.getTrangThai() == 1) {
+                _listChuaHD.add(z);
+            }
+        }
+        _tableHoaDon.setRowCount(0);
+        LoadChưaHD();
+
+    }
+
+    public void LoadChưaHD() {
+        _tableHoaDon.setRowCount(0);
+        for (HoaDonModel x : _listChuaHD) {
+            _tableHoaDon.addRow(new Object[]{sttHD(), x.getMaHD(), x.getMaNV(), x.getTenKH(), "", x.getTrangThai() == 2 ? "Đã Hoàn Thành" : "Chưa Hoàn Thành"});
+        }
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser JdateChoes;
+    private javax.swing.JButton btn_HuyDon;
     private javax.swing.JButton btn_TaoDon;
+    private javax.swing.JButton btn_ThanhToan;
     private javax.swing.JComboBox<String> cbc_TrangThai;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton11;
@@ -582,8 +813,6 @@ public class QL_BanGiay extends javax.swing.JFrame {
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -609,7 +838,7 @@ public class QL_BanGiay extends javax.swing.JFrame {
     private javax.swing.JTextField txt_SDT;
     private javax.swing.JTextField txt_TenKH;
     private javax.swing.JTextField txt_ThanhTien;
+    private javax.swing.JTextField txt_TienKhachDua;
     private javax.swing.JTextField txt_TienThua;
-    private javax.swing.JTextField txt_TongDua;
     // End of variables declaration//GEN-END:variables
 }

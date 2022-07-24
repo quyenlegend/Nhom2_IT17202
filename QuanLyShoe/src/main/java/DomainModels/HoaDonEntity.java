@@ -23,7 +23,10 @@ public class HoaDonEntity implements Serializable {
     private  String MaHD;
     private Date NgayTao;
     private String MaNV;
-    private String MaKH;
+    private String TenKH;
+    private float TienKhachDua;
+    private float TienThua;
+     private float  TongTien;   
     private int TrangThai;
     @OneToMany(mappedBy = "HoaDonEntity")
     private List<ChiTietHoaDonEntity>_listCtHd= new ArrayList<ChiTietHoaDonEntity>();
@@ -31,11 +34,14 @@ public class HoaDonEntity implements Serializable {
     public HoaDonEntity() {
     }
 
-    public HoaDonEntity(String MaHD, Date NgayTao, String MaNV, String MaKH, int TrangThai) {
+    public HoaDonEntity(String MaHD, Date NgayTao, String MaNV, String TenKH, float TienKhachDua, float TienThua, float TongTien, int TrangThai) {
         this.MaHD = MaHD;
         this.NgayTao = NgayTao;
         this.MaNV = MaNV;
-        this.MaKH = MaKH;
+        this.TenKH = TenKH;
+        this.TienKhachDua = TienKhachDua;
+        this.TienThua = TienThua;
+        this.TongTien = TongTien;
         this.TrangThai = TrangThai;
     }
 
@@ -63,12 +69,36 @@ public class HoaDonEntity implements Serializable {
         this.MaNV = MaNV;
     }
 
-    public String getMaKH() {
-        return MaKH;
+    public String getTenKH() {
+        return TenKH;
     }
 
-    public void setMaKH(String MaKH) {
-        this.MaKH = MaKH;
+    public void setTenKH(String TenKH) {
+        this.TenKH = TenKH;
+    }
+
+    public float getTienKhachDua() {
+        return TienKhachDua;
+    }
+
+    public void setTienKhachDua(float TienKhachDua) {
+        this.TienKhachDua = TienKhachDua;
+    }
+
+    public float getTienThua() {
+        return TienThua;
+    }
+
+    public void setTienThua(float TienThua) {
+        this.TienThua = TienThua;
+    }
+
+    public float getTongTien() {
+        return TongTien;
+    }
+
+    public void setTongTien(float TongTien) {
+        this.TongTien = TongTien;
     }
 
     public int getTrangThai() {
@@ -87,5 +117,7 @@ public class HoaDonEntity implements Serializable {
         this._listCtHd = _listCtHd;
     }
 
+   
+   
     
 }

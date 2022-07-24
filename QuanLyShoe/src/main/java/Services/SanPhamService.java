@@ -20,10 +20,12 @@ import java.util.List;
 public class SanPhamService implements InterfaceService<SanPhamModel> {
         private final IRepoository<SanPhamEntity> _IRepoo;
         private List<SanPhamModel> _Listsp;
+        private List<SanPhamModel> _listMaSP;
 
     public SanPhamService() {
         _IRepoo = new SanPhamRepoository();
         _Listsp = new ArrayList<>();
+        _listMaSP = new ArrayList<>();
     }
         
     
@@ -55,6 +57,17 @@ public class SanPhamService implements InterfaceService<SanPhamModel> {
     public int deleteById(int id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+
+    @Override
+    public List<SanPhamModel> getIDnhieu(String id, String s, String m) {
+      var Masp = _IRepoo.selectNhieu(id, s, m);
+       for (SanPhamEntity x : Masp) {
+             _listMaSP.add(new SanPhamModel(x.getMaSP(), x.getHangEntity(), x.getTheLoaiEntity(), x.getSizeEntity(), x.getMauSacEntity(), x.getTenSP(), x.getNgayNhap(), x.getGia(), x.getSoLuong(), x.getAnh(), x.getTrangThai()));
+        }
+       return _listMaSP;
+    }
+
+
 
    
 

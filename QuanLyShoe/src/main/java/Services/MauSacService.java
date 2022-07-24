@@ -39,8 +39,13 @@ public class MauSacService implements InterfaceService<MauSacModel>{
 
     @Override
     public int deleteById(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs
 
     
+}
+
+    @Override
+    public List<MauSacModel> getIDnhieu(String id, String s, String m) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

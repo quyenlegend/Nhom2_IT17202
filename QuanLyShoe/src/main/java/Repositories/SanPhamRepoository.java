@@ -16,25 +16,24 @@ import javax.persistence.TypedQuery;
  * @author boquy
  */
 // domainmodel
-public class SanPhamRepoository implements IRepoository<SanPhamEntity>{
+public class SanPhamRepoository implements IRepoository<SanPhamEntity> {
 
-    
-    
     @Override
     public List<SanPhamEntity> selectAll() {
-          List<SanPhamEntity> SanPhamEntity;
-          try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        List<SanPhamEntity> SanPhamEntity;
+        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
             String hql = "SELECT p FROM SANPHAM  p";
 
-            TypedQuery<SanPhamEntity> query = session.createQuery(hql,SanPhamEntity.class);
-            SanPhamEntity= query.getResultList();
-        } 
+            TypedQuery<SanPhamEntity> query = session.createQuery(hql, SanPhamEntity.class);
+            SanPhamEntity = query.getResultList();
+        }
         return SanPhamEntity;
     }
 
     @Override
     public SanPhamEntity selectID(int id) {
-       return null;
+
+        return null;
     }
 
     @Override
@@ -44,6 +43,24 @@ public class SanPhamRepoository implements IRepoository<SanPhamEntity>{
 
     @Override
     public int delete(int id) {
-        return 0;          
+        return 0;
     }
+
+    @Override
+    public SanPhamEntity findById(String id, String Size, String Mau) {
+        SanPhamEntity sanPhamEntity;
+           try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+           String hql = "SELECT p FROM SANPHAM p WHERE MaSP = :id ";
+            TypedQuery<SanPhamEntity> query = session.createQuery(hql, SanPhamEntity.class);
+            query.setParameter("id", id);
+            sanPhamEntity = query.getSingleResult();
+        }
+        return sanPhamEntity; 
+        
+        
+        
+    }
+
+   
+
 }

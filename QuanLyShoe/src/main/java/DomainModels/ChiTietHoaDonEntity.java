@@ -14,34 +14,36 @@ import javax.persistence.Table;
  *
  * @author boquy
  */
-@Entity(name="HOADONCHITIET") 
+@Entity(name = "HOADONCHITIET")
 public class ChiTietHoaDonEntity implements Serializable {
+
     @Id
     @ManyToOne
-    private HoaDonEntity  HoaDonEntity;
+    private HoaDonEntity HoaDonEntity;
     @Id
     @ManyToOne
     private SanPhamEntity SanPhamEntity;
-    
+    private String TenSP;
+    private String Size;
+    private String Mau;
+    private String TenHang;
+    private String TheLoai;
+    private int SoLuong;
     private float Gia;
-    private float SoLuong;
-    private float TienKhach;
-    private float TienMua;
-    private float ThanhTien;
-    private int TrangThai;
 
     public ChiTietHoaDonEntity() {
     }
-    
-    public ChiTietHoaDonEntity(HoaDonEntity HoaDonEntity, SanPhamEntity SanPhamEntity, float Gia, float SoLuong, float TienKhach, float TienMua, float ThanhTien, int TrangThai) {
+
+    public ChiTietHoaDonEntity(HoaDonEntity HoaDonEntity, SanPhamEntity SanPhamEntity, String TenSP, String Size, String Mau, String TenHang, String TheLoai, int SoLuong, float Gia) {
         this.HoaDonEntity = HoaDonEntity;
         this.SanPhamEntity = SanPhamEntity;
-        this.Gia = Gia;
+        this.TenSP = TenSP;
+        this.Size = Size;
+        this.Mau = Mau;
+        this.TenHang = TenHang;
+        this.TheLoai = TheLoai;
         this.SoLuong = SoLuong;
-        this.TienKhach = TienKhach;
-        this.TienMua = TienMua;
-        this.ThanhTien = ThanhTien;
-        this.TrangThai = TrangThai;
+        this.Gia = Gia;
     }
 
     public HoaDonEntity getHoaDonEntity() {
@@ -60,6 +62,54 @@ public class ChiTietHoaDonEntity implements Serializable {
         this.SanPhamEntity = SanPhamEntity;
     }
 
+    public String getTenSP() {
+        return TenSP;
+    }
+
+    public void setTenSP(String TenSP) {
+        this.TenSP = TenSP;
+    }
+
+    public String getSize() {
+        return Size;
+    }
+
+    public void setSize(String Size) {
+        this.Size = Size;
+    }
+
+    public String getMau() {
+        return Mau;
+    }
+
+    public void setMau(String Mau) {
+        this.Mau = Mau;
+    }
+
+    public String getTenHang() {
+        return TenHang;
+    }
+
+    public void setTenHang(String TenHang) {
+        this.TenHang = TenHang;
+    }
+
+    public String getTheLoai() {
+        return TheLoai;
+    }
+
+    public void setTheLoai(String TheLoai) {
+        this.TheLoai = TheLoai;
+    }
+
+    public int getSoLuong() {
+        return SoLuong;
+    }
+
+    public void setSoLuong(int SoLuong) {
+        this.SoLuong = SoLuong;
+    }
+
     public float getGia() {
         return Gia;
     }
@@ -67,49 +117,6 @@ public class ChiTietHoaDonEntity implements Serializable {
     public void setGia(float Gia) {
         this.Gia = Gia;
     }
-
-    public float getSoLuong() {
-        return SoLuong;
-    }
-
-    public void setSoLuong(float SoLuong) {
-        this.SoLuong = SoLuong;
-    }
-
-    public float getTienKhach() {
-        return TienKhach;
-    }
-
-    public void setTienKhach(float TienKhach) {
-        this.TienKhach = TienKhach;
-    }
-
-    public float getTienMua() {
-        return TienMua;
-    }
-
-    public void setTienMua(float TienMua) {
-        this.TienMua = TienMua;
-    }
-
-    public float getThanhTien() {
-        return ThanhTien;
-    }
-
-    public void setThanhTien(float ThanhTien) {
-        this.ThanhTien = ThanhTien;
-    }
-
-    public int getTrangThai() {
-        return TrangThai;
-    }
-
-    public void setTrangThai(int TrangThai) {
-        this.TrangThai = TrangThai;
-    }
-
     
-    
-        
-    
+
 }

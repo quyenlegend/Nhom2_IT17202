@@ -18,4 +18,5 @@ public interface InterfaceService<KeyType> {
  public KeyType createNew(KeyType KeyType);
  public KeyType updateById(KeyType KeyType);
  public int deleteById(int id);
+  public List<KeyType> getIDnhieu (String id, String s , String m);
 }
