@@ -3,12 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package ViewModels;
+
 import DomainModels.NhanVien;
-/**
- *
- * @author s2ngo
- */
+
 public class NhanVien_Model {
+
     private String MaNV;
     private String TenNV;
     private boolean GioiTinh;
@@ -105,5 +104,5 @@ public class NhanVien_Model {
     public void setTrangThai(boolean TrangThai) {
         this.TrangThai = TrangThai;
     }
-    
+
 }

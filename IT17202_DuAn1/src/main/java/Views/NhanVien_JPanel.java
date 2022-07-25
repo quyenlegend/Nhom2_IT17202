@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class NhanVien_JPanel extends javax.swing.JPanel {
+
     NhanVien_Model nhanVien_Model;
     NhanVienServices nhanVienServices;
     DefaultTableModel _DefaultTableModel;
@@ -27,27 +28,27 @@ public class NhanVien_JPanel extends javax.swing.JPanel {
         _DefaultComboBoxModel = new DefaultComboBoxModel();
         rdbGioiTinh();
         rdbTrangThai();
-        cbcChucVu(nhanVienServices.getList());
+        cbcChucVu();
         fillTable(nhanVienServices.getList());
     }
 
     public void rdbGioiTinh() {
-       ButtonGroup btn1 = new ButtonGroup();
-       btn1.add(rdb_nam);
-       btn1.add(rdb_nu);
-       rdb_nam.setSelected(true);
-    }
-    public void rdbTrangThai() {
-       ButtonGroup btn2 = new ButtonGroup();
-       btn2.add(rdb_hoatdong);
-       btn2.add(rdb_khonghoatdong);
-       rdb_hoatdong.setSelected(true);
+        ButtonGroup btn1 = new ButtonGroup();
+        btn1.add(rdb_nam);
+        btn1.add(rdb_nu);
+        rdb_nam.setSelected(true);
     }
 
-    public void cbcChucVu(List<NhanVien> nv) {
-        for (NhanVien x : nv) {
-            _DefaultComboBoxModel.addElement(x.getChucVu());
-        }
+    public void rdbTrangThai() {
+        ButtonGroup btn2 = new ButtonGroup();
+        btn2.add(rdb_hoatdong);
+        btn2.add(rdb_khonghoatdong);
+        rdb_hoatdong.setSelected(true);
+    }
+
+    public void cbcChucVu() {
+        _DefaultComboBoxModel.addElement("Chu CH");
+        _DefaultComboBoxModel.addElement("Nhan Vien");
         cbc_chucvu.setModel(_DefaultComboBoxModel);
     }
 
@@ -60,6 +61,7 @@ public class NhanVien_JPanel extends javax.swing.JPanel {
         }
         return null;
     }
+
     public String tenNhanVien(String ma) {
         List<NhanVien> nv = nhanVienServices.getList();
         for (NhanVien x : nv) {
@@ -74,14 +76,15 @@ public class NhanVien_JPanel extends javax.swing.JPanel {
         _DefaultTableModel.setRowCount(0);
         _DefaultTableModel = (DefaultTableModel) tbl_nhanvien.getModel();
         for (NhanVien x : nv) {
-            _DefaultTableModel.addRow(new Object[]{x.getMaNV(), x.getTenNV(), x.isGioiTinh()?"Nam":"Nu", x.getSDT(),
-            x.getChucVu()==1?"Nhan Vien":"Chu CH", x.getMatKhau(), x.getEmail(), x.getDiaChi(), x.isTrangThai()?"Hoat Dong":"Khong Hoat Dong"});
+            _DefaultTableModel.addRow(new Object[]{x.getMaNV(), x.getTenNV(), x.isGioiTinh() ? "Nam" : "Nu", x.getSDT(),
+                x.getChucVu() == 1 ? "Nhan Vien" : "Chu CH", x.getMatKhau(), x.getEmail(), x.getDiaChi(), x.isTrangThai() ? "Hoat Dong" : "Khong Hoat Dong"});
         }
     }
-    NhanVien_Model getGUI(){
-          return new NhanVien_Model(txt_manv.getText(), txt_hoten.getText(), rdb_nam.isSelected()?true:false, txt_sdt.getText(), 
-                  cbc_chucvu.getSelectedIndex()==0?1:2, txt_matkhau.getText(),txt_email.getText(), txt_diachi.getText(), 
-                  rdb_hoatdong.isSelected()?true:false);
+
+    NhanVien_Model getGUI() {
+        return new NhanVien_Model(txt_manv.getText(), txt_hoten.getText(), rdb_nam.isSelected() ? true : false, txt_sdt.getText(),
+                cbc_chucvu.getSelectedItem().toString().equals("Chu CH") ? 0 : 1, txt_matkhau.getText(), txt_email.getText(), txt_diachi.getText(),
+                rdb_hoatdong.isSelected() ? true : false);
     }
 
     public void showDetail(int index) {
@@ -352,13 +355,11 @@ public class NhanVien_JPanel extends javax.swing.JPanel {
     private void btn_suaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_suaActionPerformed
         JOptionPane.showMessageDialog(this, nhanVienServices.edit(getGUI()));
         fillTable(nhanVienServices.getList());
-        JOptionPane.showMessageDialog(this, "Sua Thanh Cong");
     }//GEN-LAST:event_btn_suaActionPerformed
 
     private void btn_themActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_themActionPerformed
         JOptionPane.showMessageDialog(this, nhanVienServices.add(getGUI()));
         fillTable(nhanVienServices.getList());
-        JOptionPane.showMessageDialog(this, "Them Thanh Cong");
     }//GEN-LAST:event_btn_themActionPerformed
 
     private void btn_clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_clearActionPerformed
@@ -374,9 +375,7 @@ public class NhanVien_JPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btn_clearActionPerformed
 
     private void btn_timkiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_timkiemActionPerformed
-        JOptionPane.showMessageDialog(this, nhanVienServices.find(getGUI().toString()));
-//        fillTable(nhanVienServices.getList());
-        JOptionPane.showMessageDialog(this, "Tìm Kiem Thanh Cong");
+        fillTable(nhanVienServices.find(txt_timkiem.getText()));
     }//GEN-LAST:event_btn_timkiemActionPerformed
 
 

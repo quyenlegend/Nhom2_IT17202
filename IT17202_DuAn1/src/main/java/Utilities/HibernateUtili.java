@@ -9,32 +9,31 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 
-/**
- *
- * @author s2ngo
- */
 public class HibernateUtili {
+
     private final static SessionFactory FACTORY;
+
     static {
-        
-       // Configuration configuration = new Configuration();
+
+        // Configuration configuration = new Configuration();
         Configuration configuration = new Configuration();
         java.util.Properties properties = new java.util.Properties();
         configuration.setProperties(properties);
-        properties.put(Environment.DIALECT,"org.hibernate.dialect.MySQLDialect");
-        properties.put(Environment.DRIVER,"com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        properties.put(Environment.URL,"jdbc:sqlserver://localhost:1433;databaseName=QL_DUAN1");
-        properties.put(Environment.USER,"Kennysinh");
-        properties.put(Environment.PASS,"1205");
-        
+        properties.put(Environment.DIALECT, "org.hibernate.dialect.MySQLDialect");
+        properties.put(Environment.DRIVER, "com.microsoft.sqlserver.jdbc.SQLServerDriver");
+        properties.put(Environment.URL, "jdbc:sqlserver://localhost:1433;databaseName=QL_DUAN1");
+        properties.put(Environment.USER, "Kennysinh");
+        properties.put(Environment.PASS, "1205");
+
         configuration.setProperties(properties);
         configuration.addAnnotatedClass(DomainModels.NhanVien.class);
-        
+
         org.hibernate.service.ServiceRegistry registry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
-        
+
         FACTORY = configuration.buildSessionFactory(registry);
     }
-    public static SessionFactory getSessionFactory(){
+
+    public static SessionFactory getSessionFactory() {
         return FACTORY;
     }
 }

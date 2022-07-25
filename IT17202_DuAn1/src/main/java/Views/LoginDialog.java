@@ -3,22 +3,24 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
 package Views;
+
 import Services.NhanVienServices;
 import java.util.List;
 import DomainModels.NhanVien;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
-/**
- *
- * @author s2ngo
- */
+
 public class LoginDialog extends javax.swing.JDialog {
-    NhanVienServices nhanVienServices = new NhanVienServices();
+
+    List<NhanVien> nv = new ArrayList<>();
+
     public LoginDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
     }
-    public void login(List<NhanVien> nv){
+
+    public void login() {
         MainJFrame main = new MainJFrame();
         for (NhanVien x : nv) {
             if (!txt_Username.getText().equals(x.getMaNV())) {
@@ -33,22 +35,7 @@ public class LoginDialog extends javax.swing.JDialog {
             }
         }
     }
-//    public void dangNhap(List<NhanVien> nv){
-//        Main main = new Main();
-//        for (NhanVien x : nv) {
-//            if(!txt_tenDangNhap.getText().equals(x.getMaNV())){
-//                if(!txt_pass.getText().equals(x.getMatKhau())){
-//                    
-//                   JOptionPane.showMessageDialog(this, "Sai tên đăng nhập hoặc mật khẩu");
-//                    return;
-//                }
-//            }else{
-//                    this.dispose();
-//                    main.setVisible(true);
-//                    return;
-//                }
-//        }
-//    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -146,7 +133,7 @@ public class LoginDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_LoginActionPerformed
-        
+        login();
     }//GEN-LAST:event_btn_LoginActionPerformed
 
     private void btn_ExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ExitActionPerformed

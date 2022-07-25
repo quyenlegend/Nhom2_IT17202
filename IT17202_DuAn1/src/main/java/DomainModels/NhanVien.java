@@ -9,12 +9,9 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-/**
- *
- * @author s2ngo
- */
 @Entity(name = "NHANVIEN")
-public class NhanVien implements Serializable{
+public class NhanVien implements Serializable {
+
     @Id
     private String MaNV;
     private String TenNV;
@@ -112,5 +109,5 @@ public class NhanVien implements Serializable{
     public void setTrangThai(boolean TrangThai) {
         this.TrangThai = TrangThai;
     }
-          
+
 }

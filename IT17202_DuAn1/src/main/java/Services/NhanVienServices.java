@@ -3,16 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Services;
+
 import DomainModels.NhanVien;
 import Repositories.NhanVien_Mapped;
 import ViewModels.NhanVien_Model;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author s2ngo
- */
 public class NhanVienServices {
 
     NhanVien_Mapped nhanVien_Mapped;
@@ -34,10 +31,11 @@ public class NhanVienServices {
         return nhanVien_Mapped.edit(new NhanVien(nv.getMaNV(), nv.getTenNV(), nv.isGioiTinh(),
                 nv.getSDT(), nv.getChucVu(), nv.getMatKhau(), nv.getEmail(), nv.getDiaChi(), nv.isTrangThai()));
     }
-    public List<NhanVien> find(String ma){
+
+    public List<NhanVien> find(String ma) {
         List<NhanVien> nv = new ArrayList<>();
         for (NhanVien x : nhanVien_Mapped.getList()) {
-            if (x.getMaNV().toLowerCase().contains(ma.toLowerCase()) || x.getTenNV().toLowerCase().contains(ma.toLowerCase())) {
+            if (x.getMaNV().toLowerCase().contains(ma.toLowerCase())) {
                 nv.add(x);
             }
         }

@@ -5,12 +5,10 @@
 package Views;
 
 import javax.swing.JPanel;
+import Views.LoginDialog;
 
-/**
- *
- * @author s2ngo
- */
 public class MainJFrame extends javax.swing.JFrame {
+
     public MainJFrame() {
         initComponents();
         setLocationRelativeTo(null);
@@ -136,7 +134,7 @@ public class MainJFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    public void showJPN(JPanel a){
+    public void showJPN(JPanel a) {
         jpn.removeAll();
         jpn.add(a);
         jpn.validate();

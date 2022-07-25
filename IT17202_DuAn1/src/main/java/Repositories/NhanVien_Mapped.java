@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Repositories;
+
 import DomainModels.NhanVien;
 import Utilities.HibernateUtili;
 import java.util.ArrayList;
@@ -11,21 +12,20 @@ import javax.persistence.TypedQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-/**
- *
- * @author s2ngo
- */
+
 public class NhanVien_Mapped {
-    public List<NhanVien> getList(){
+
+    public List<NhanVien> getList() {
         List<NhanVien> nhanViens;
-        try(Session session = HibernateUtili.getSessionFactory().openSession()){
+        try ( Session session = HibernateUtili.getSessionFactory().openSession()) {
             TypedQuery<NhanVien> query = session.createQuery("from NHANVIEN");
             nhanViens = query.getResultList();
         }
         return nhanViens;
     }
-    public String add(NhanVien nv){
-        try(Session session = HibernateUtili.getSessionFactory().openSession()){
+
+    public String add(NhanVien nv) {
+        try ( Session session = HibernateUtili.getSessionFactory().openSession()) {
             Transaction transaction = session.getTransaction();
             transaction.begin();
             try {
@@ -37,10 +37,11 @@ public class NhanVien_Mapped {
                 return "Them Khong Thanh Cong";
             }
         }
-        return "Them Khong Thanh Cong";
+        return "Them Thanh Cong";
     }
-    public String edit(NhanVien nv){
-        try(Session session = HibernateUtili.getSessionFactory().openSession()){
+
+    public String edit(NhanVien nv) {
+        try ( Session session = HibernateUtili.getSessionFactory().openSession()) {
             Transaction transaction = session.getTransaction();
             transaction.begin();
             try {
@@ -52,7 +53,7 @@ public class NhanVien_Mapped {
                 return "Sua Khong Thanh Cong";
             }
         }
-        return "Sua Khong Thanh Cong";
+        return "Sua Thanh Cong";
     }
-    
+
 }
