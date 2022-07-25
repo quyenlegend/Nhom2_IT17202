@@ -4,10 +4,6 @@
  */
 package Views;
 
-/**
- *
- * @author s2ngo
- */
 public class DoiMatKhau_JDialog extends javax.swing.JDialog {
 
     /**
