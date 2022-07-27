@@ -4,51 +4,54 @@
  */
 package ViewModels;
 
+import DomainModels.HoaDonEntity;
+import DomainModels.SanPhamEntity;
+
 /**
  *
  * @author boquy
  */
 public class ChiTietHoaDonModel {
 
-    private String MaHD;
-    private String MaSP;
+    private HoaDonEntity HoaDonEntity;
+    private SanPhamEntity SanPhamEntity;
     private String TenSP;
     private String Size;
     private String Mau;
     private String TenHang;
     private String TheLoai;
     private int SoLuong;
-    private float Gia;
+    private float GiaTien;
 
     public ChiTietHoaDonModel() {
     }
 
-    public ChiTietHoaDonModel(String MaHD, String MaSP, String TenSP, String Size, String Mau, String TenHang, String TheLoai, int SoLuong, float Gia) {
-        this.MaHD = MaHD;
-        this.MaSP = MaSP;
+    public ChiTietHoaDonModel(HoaDonEntity HoaDonEntity, SanPhamEntity SanPhamEntity, String TenSP, String Size, String Mau, String TenHang, String TheLoai, int SoLuong, float GiaTien) {
+        this.HoaDonEntity = HoaDonEntity;
+        this.SanPhamEntity = SanPhamEntity;
         this.TenSP = TenSP;
         this.Size = Size;
         this.Mau = Mau;
         this.TenHang = TenHang;
         this.TheLoai = TheLoai;
         this.SoLuong = SoLuong;
-        this.Gia = Gia;
+        this.GiaTien = GiaTien;
     }
 
-    public String getMaHD() {
-        return MaHD;
+    public HoaDonEntity getHoaDonEntity() {
+        return HoaDonEntity;
     }
 
-    public void setMaHD(String MaHD) {
-        this.MaHD = MaHD;
+    public void setHoaDonEntity(HoaDonEntity HoaDonEntity) {
+        this.HoaDonEntity = HoaDonEntity;
     }
 
-    public String getMaSP() {
-        return MaSP;
+    public SanPhamEntity getSanPhamEntity() {
+        return SanPhamEntity;
     }
 
-    public void setMaSP(String MaSP) {
-        this.MaSP = MaSP;
+    public void setSanPhamEntity(SanPhamEntity SanPhamEntity) {
+        this.SanPhamEntity = SanPhamEntity;
     }
 
     public String getTenSP() {
@@ -99,16 +102,14 @@ public class ChiTietHoaDonModel {
         this.SoLuong = SoLuong;
     }
 
-    public float getGia() {
-        return Gia;
+    public float getGiaTien() {
+        return GiaTien;
     }
 
-    public void setGia(float Gia) {
-        this.Gia = Gia;
+    public void setGiaTien(float GiaTien) {
+        this.GiaTien = GiaTien;
     }
 
-    
   
-    
 
 }

@@ -11,31 +11,28 @@ import ViewModels.SanPhamModel;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
 /**
  *
  * @author boquy
  */
-public class SanPhamService implements InterfaceService<SanPhamModel> {
-        private final IRepoository<SanPhamEntity> _IRepoo;
-        private List<SanPhamModel> _Listsp;
-        private List<SanPhamModel> _listMaSP;
+public class SanPhamService implements InterfaceService<SanPhamModel>{
+
+    private final IRepoository<SanPhamEntity> _IRepoo;
+    private List<SanPhamModel> _Listsp;
 
     public SanPhamService() {
         _IRepoo = new SanPhamRepoository();
         _Listsp = new ArrayList<>();
-        _listMaSP = new ArrayList<>();
     }
-        
-    
+
     @Override
     public List<SanPhamModel> Select() {
-         var sp = _IRepoo.selectAll();
-         for (SanPhamEntity x : sp) {
-             _Listsp.add(new SanPhamModel(x.getMaSP(), x.getHangEntity(), x.getTheLoaiEntity(), x.getSizeEntity(), x.getMauSacEntity(), x.getTenSP(), x.getNgayNhap(), x.getGia(), x.getSoLuong(), x.getAnh(), x.getTrangThai()));
+        var sp = _IRepoo.selectAll();
+        for (SanPhamEntity x : sp) {
+            _Listsp.add(new SanPhamModel(x.getMaSP(), x.getHangEntity(), x.getTheLoaiEntity(), x.getSizeEntity(), x.getMauSacEntity(), x.getTenSP(), x.getNgayNhap(), x.getGia(), x.getSoLuong(), x.getAnh(), x.getTrangThai()));
+            
         }
-         return _Listsp;
+        return _Listsp;
     }
 
     @Override
@@ -59,19 +56,13 @@ public class SanPhamService implements InterfaceService<SanPhamModel> {
     }
 
     @Override
-    public List<SanPhamModel> getIDnhieu(String id, String s, String m) {
-      var Masp = _IRepoo.selectNhieu(id, s, m);
-       for (SanPhamEntity x : Masp) {
-             _listMaSP.add(new SanPhamModel(x.getMaSP(), x.getHangEntity(), x.getTheLoaiEntity(), x.getSizeEntity(), x.getMauSacEntity(), x.getTenSP(), x.getNgayNhap(), x.getGia(), x.getSoLuong(), x.getAnh(), x.getTrangThai()));
-        }
-       return _listMaSP;
+    public List<SanPhamModel> getIDnhieu(String MaHD) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-
-
    
+    }
 
-}
 //    public  List<SanPhamModel> Select() {
 //        var sanPham =_IR.selectAll();
 //        for (SanPhamEntity x : sanPham) {
@@ -81,10 +72,7 @@ public class SanPhamService implements InterfaceService<SanPhamModel> {
 //        return _listSpModel;
 //    }
 
-    
-     //mauModel /TLModel /SSSZ ,hangMD
-
-  
+//mauModel /TLModel /SSSZ ,hangMD
 //    public static SanPhamModel sp(SanPhamEntity x){
 //        return new SanPhamModel(x.getMaSP(), HangService.hangMD(x.getHangEntity()), TheLoaiService.TLModel(x.getTheLoaiEntity()) ,SizeService.SSSZ(x.getSizeEntity()) ,MauSacService.mauModel(x.getMauSacEntity()) , x.getTenSP(), x.getNgayNhap(), 0, 0, x.getAnh(), 0);
 //    }

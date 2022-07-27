@@ -50,6 +50,11 @@ public class SanPhamEntity implements Serializable {
     public SanPhamEntity() {
     }
 
+    public SanPhamEntity(String MaSP) {
+        this.MaSP = MaSP;
+    }
+    
+
     public SanPhamEntity(String MaSP, HangEntity HangEntity, TheLoaiEntity TheLoaiEntity, SizeEntity SizeEntity, MauSacEntity MauSacEntity, String TenSP, String NgayNhap, float Gia, int SoLuong, String Anh, int TrangThai) {
         this.MaSP = MaSP;
         this.HangEntity = HangEntity;

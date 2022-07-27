@@ -23,6 +23,9 @@ public class HoaDonService implements InterfaceService<HoaDonModel>{
         _IRepoo = new HoaDonRepoository();
         _listHD = new ArrayList<>();
     }
+    public static HoaDonModel HDmodle(HoaDonEntity x){
+        return new HoaDonModel(x.getMaHD(), x.getNgayTao(), x.getMaNV(), x.getTenKH(), x.getTienKhachDua(), x.getTienThua(), x.getTongTien(), x.getTrangThai());
+    }
 
     
       
@@ -59,10 +62,14 @@ public class HoaDonService implements InterfaceService<HoaDonModel>{
     }
 
     @Override
-    public List<HoaDonModel> getIDnhieu(String id, String s, String m) {
+    public List<HoaDonModel> getIDnhieu(String MaHD) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
+  
+
+  
+  
 
     
 }

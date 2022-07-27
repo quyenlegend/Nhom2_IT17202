@@ -34,6 +34,11 @@ public class HoaDonEntity implements Serializable {
     public HoaDonEntity() {
     }
 
+    public HoaDonEntity(String MaHD) {
+        this.MaHD = MaHD;
+    }
+    
+
     public HoaDonEntity(String MaHD, Date NgayTao, String MaNV, String TenKH, float TienKhachDua, float TienThua, float TongTien, int TrangThai) {
         this.MaHD = MaHD;
         this.NgayTao = NgayTao;

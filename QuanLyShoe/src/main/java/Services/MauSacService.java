@@ -12,40 +12,10 @@ import java.util.List;
  *
  * @author boquy
  */
-public class MauSacService implements InterfaceService<MauSacModel>{
+public class MauSacService {
          public static MauSacModel mauModel(MauSacEntity x){
              return new MauSacModel(x.getMaMS(),x.getTenMau());
          }
 
-    @Override
-    public List<MauSacModel> Select() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public MauSacModel getID(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public MauSacModel createNew(MauSacModel KeyType) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public MauSacModel updateById(MauSacModel KeyType) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public int deleteById(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs
-
     
-}
-
-    @Override
-    public List<MauSacModel> getIDnhieu(String id, String s, String m) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 }

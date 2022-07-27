@@ -59,9 +59,13 @@ public class HoaDonRepoository implements IRepoository<HoaDonEntity>{
     }
 
     @Override
-    public HoaDonEntity findById(String id, String Size, String Mau) {
+    public List<HoaDonEntity> findById(String DK) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+
+  
+
+   
 
   
   

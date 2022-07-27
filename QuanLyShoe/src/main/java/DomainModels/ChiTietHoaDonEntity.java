@@ -7,6 +7,7 @@ package DomainModels;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -19,9 +20,11 @@ public class ChiTietHoaDonEntity implements Serializable {
 
     @Id
     @ManyToOne
+    @JoinColumn(name = "MaHD")
     private HoaDonEntity HoaDonEntity;
     @Id
     @ManyToOne
+    @JoinColumn(name = "MaSP")
     private SanPhamEntity SanPhamEntity;
     private String TenSP;
     private String Size;
@@ -29,12 +32,12 @@ public class ChiTietHoaDonEntity implements Serializable {
     private String TenHang;
     private String TheLoai;
     private int SoLuong;
-    private float Gia;
+    private float GiaTien;
 
     public ChiTietHoaDonEntity() {
     }
 
-    public ChiTietHoaDonEntity(HoaDonEntity HoaDonEntity, SanPhamEntity SanPhamEntity, String TenSP, String Size, String Mau, String TenHang, String TheLoai, int SoLuong, float Gia) {
+    public ChiTietHoaDonEntity(HoaDonEntity HoaDonEntity, SanPhamEntity SanPhamEntity, String TenSP, String Size, String Mau, String TenHang, String TheLoai, int SoLuong, float GiaTien) {
         this.HoaDonEntity = HoaDonEntity;
         this.SanPhamEntity = SanPhamEntity;
         this.TenSP = TenSP;
@@ -43,7 +46,7 @@ public class ChiTietHoaDonEntity implements Serializable {
         this.TenHang = TenHang;
         this.TheLoai = TheLoai;
         this.SoLuong = SoLuong;
-        this.Gia = Gia;
+        this.GiaTien = GiaTien;
     }
 
     public HoaDonEntity getHoaDonEntity() {
@@ -110,13 +113,14 @@ public class ChiTietHoaDonEntity implements Serializable {
         this.SoLuong = SoLuong;
     }
 
-    public float getGia() {
-        return Gia;
+    public float getGiaTien() {
+        return GiaTien;
     }
 
-    public void setGia(float Gia) {
-        this.Gia = Gia;
+    public void setGiaTien(float GiaTien) {
+        this.GiaTien = GiaTien;
     }
-    
+
+   
 
 }
