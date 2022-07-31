@@ -46,8 +46,9 @@ public class SanPhamService implements InterfaceService<SanPhamModel>{
     }
 
     @Override
-    public SanPhamModel updateById(SanPhamModel KeyType) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public SanPhamModel updateById(SanPhamModel sanPham) {
+         var sp = _IRepoo.save(new SanPhamEntity(sanPham.getMaSP(), sanPham.getHangEntity(), sanPham.getTheLoaiEntity(), sanPham.getSizeEntity(), sanPham.getMauSacEntity(), sanPham.getTenSP(), sanPham.getNgayNhap(), sanPham.getGia(), sanPham.getSoLuong(), sanPham.getAnh(), sanPham.getTrangThai()));
+        return new SanPhamModel(sp.getMaSP(), sp.getHangEntity(), sp.getTheLoaiEntity(), sp.getSizeEntity(), sp.getMauSacEntity(), sp.getTenSP(), sp.getNgayNhap(), sp.getGia(), sp.getSoLuong(), sp.getAnh(), sp.getTrangThai());
     }
 
     @Override

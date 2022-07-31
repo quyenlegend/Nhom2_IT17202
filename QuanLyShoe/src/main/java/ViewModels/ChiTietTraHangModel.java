@@ -4,17 +4,17 @@
  */
 package ViewModels;
 
-import DomainModels.HoaDonEntity;
-import DomainModels.SanPhamEntity;
+import DomainModels.ChiTietHoaDonEntity;
+import DomainModels.DoiTraHangEntity;
 
 /**
  *
  * @author boquy
  */
-public class ChiTietHoaDonModel {
-    private int IDChiTiet;
-    private HoaDonEntity HoaDonEntity;
-    private SanPhamEntity SanPhamEntity;
+public class ChiTietTraHangModel {
+
+    private DoiTraHangEntity DoiTraHangEntity;
+    private ChiTietHoaDonEntity ChiTietHoaDonEntity;
     private String TenSP;
     private String Size;
     private String Mau;
@@ -23,17 +23,12 @@ public class ChiTietHoaDonModel {
     private int SoLuong;
     private float GiaTien;
 
-    public ChiTietHoaDonModel() {
+    public ChiTietTraHangModel() {
     }
 
-    public ChiTietHoaDonModel(int IDChiTiet) {
-        this.IDChiTiet = IDChiTiet;
-    }
-
-    public ChiTietHoaDonModel(int IDChiTiet, HoaDonEntity HoaDonEntity, SanPhamEntity SanPhamEntity, String TenSP, String Size, String Mau, String TenHang, String TheLoai, int SoLuong, float GiaTien) {
-        this.IDChiTiet = IDChiTiet;
-        this.HoaDonEntity = HoaDonEntity;
-        this.SanPhamEntity = SanPhamEntity;
+    public ChiTietTraHangModel(DoiTraHangEntity DoiTraHangEntity, ChiTietHoaDonEntity ChiTietHoaDonEntity, String TenSP, String Size, String Mau, String TenHang, String TheLoai, int SoLuong, float GiaTien) {
+        this.DoiTraHangEntity = DoiTraHangEntity;
+        this.ChiTietHoaDonEntity = ChiTietHoaDonEntity;
         this.TenSP = TenSP;
         this.Size = Size;
         this.Mau = Mau;
@@ -43,28 +38,20 @@ public class ChiTietHoaDonModel {
         this.GiaTien = GiaTien;
     }
 
-    public int getIDChiTiet() {
-        return IDChiTiet;
+    public DoiTraHangEntity getDoiTraHangEntity() {
+        return DoiTraHangEntity;
     }
 
-    public void setIDChiTiet(int IDChiTiet) {
-        this.IDChiTiet = IDChiTiet;
+    public void setDoiTraHangEntity(DoiTraHangEntity DoiTraHangEntity) {
+        this.DoiTraHangEntity = DoiTraHangEntity;
     }
 
-    public HoaDonEntity getHoaDonEntity() {
-        return HoaDonEntity;
+    public ChiTietHoaDonEntity getChiTietHoaDonEntity() {
+        return ChiTietHoaDonEntity;
     }
 
-    public void setHoaDonEntity(HoaDonEntity HoaDonEntity) {
-        this.HoaDonEntity = HoaDonEntity;
-    }
-
-    public SanPhamEntity getSanPhamEntity() {
-        return SanPhamEntity;
-    }
-
-    public void setSanPhamEntity(SanPhamEntity SanPhamEntity) {
-        this.SanPhamEntity = SanPhamEntity;
+    public void setChiTietHoaDonEntity(ChiTietHoaDonEntity ChiTietHoaDonEntity) {
+        this.ChiTietHoaDonEntity = ChiTietHoaDonEntity;
     }
 
     public String getTenSP() {
@@ -123,9 +110,5 @@ public class ChiTietHoaDonModel {
         this.GiaTien = GiaTien;
     }
 
- 
-
-  
-  
 
 }

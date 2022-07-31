@@ -13,31 +13,34 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-/**
- *
- * @author boquy
- */
-@Entity(name="HOADON")
+// 2 ontoamany : ChiTietHD | Đổi trả hàng
+// ManyTOOne : Nhan Viên
+@Entity(name = "HOADON")
 public class HoaDonEntity implements Serializable {
+
     @Id
-    private  String MaHD;
+    private String MaHD;
     private Date NgayTao;
     private String MaNV;
     private String TenKH;
     private float TienKhachDua;
     private float TienThua;
-     private float  TongTien;   
+    private float TongTien;
     private int TrangThai;
     @OneToMany(mappedBy = "HoaDonEntity")
-    private List<ChiTietHoaDonEntity>_listCtHd= new ArrayList<ChiTietHoaDonEntity>();
+    private List<ChiTietHoaDonEntity> _listCtHd = new ArrayList<ChiTietHoaDonEntity>();
 
+    @OneToMany(mappedBy = "HoaDonEntity")
+    private List<DoiTraHangEntity> _listCtTraHang = new ArrayList<DoiTraHangEntity>();
+
+    
     public HoaDonEntity() {
     }
 
+    // SQL lấy gui vào hóa đơn chi Tiết
     public HoaDonEntity(String MaHD) {
         this.MaHD = MaHD;
     }
-    
 
     public HoaDonEntity(String MaHD, Date NgayTao, String MaNV, String TenKH, float TienKhachDua, float TienThua, float TongTien, int TrangThai) {
         this.MaHD = MaHD;
@@ -122,7 +125,13 @@ public class HoaDonEntity implements Serializable {
         this._listCtHd = _listCtHd;
     }
 
-   
-   
+    public List<DoiTraHangEntity> getListCtTraHang() {
+        return _listCtTraHang;
+    }
+
+    public void setListCtTraHang(List<DoiTraHangEntity> _listCtTraHang) {
+        this._listCtTraHang = _listCtTraHang;
+    }
     
+
 }

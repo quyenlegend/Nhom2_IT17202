@@ -5,24 +5,30 @@
 package DomainModels;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-/**
- *
- * @author boquy
- */
+// OneToMany : Chi Tiết Trả Hàng
+// ManyToOne : Hóa Đơn  | Sản Phâm
 @Entity(name = "HOADONCHITIET")
 public class ChiTietHoaDonEntity implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int IDChiTiet;
+
     @ManyToOne
     @JoinColumn(name = "MaHD")
     private HoaDonEntity HoaDonEntity;
-    @Id
+
     @ManyToOne
     @JoinColumn(name = "MaSP")
     private SanPhamEntity SanPhamEntity;
@@ -33,11 +39,18 @@ public class ChiTietHoaDonEntity implements Serializable {
     private String TheLoai;
     private int SoLuong;
     private float GiaTien;
+    @OneToMany(mappedBy = "ChiTietHoaDonEntity")
+    private List<ChiTietTraHangEntity> _ListHDCT_TraH = new ArrayList<ChiTietTraHangEntity>();
 
     public ChiTietHoaDonEntity() {
     }
 
-    public ChiTietHoaDonEntity(HoaDonEntity HoaDonEntity, SanPhamEntity SanPhamEntity, String TenSP, String Size, String Mau, String TenHang, String TheLoai, int SoLuong, float GiaTien) {
+    public ChiTietHoaDonEntity(int IDChiTiet) {
+        this.IDChiTiet = IDChiTiet;
+    }
+
+    public ChiTietHoaDonEntity(int IDChiTiet, HoaDonEntity HoaDonEntity, SanPhamEntity SanPhamEntity, String TenSP, String Size, String Mau, String TenHang, String TheLoai, int SoLuong, float GiaTien) {
+        this.IDChiTiet = IDChiTiet;
         this.HoaDonEntity = HoaDonEntity;
         this.SanPhamEntity = SanPhamEntity;
         this.TenSP = TenSP;
@@ -47,6 +60,14 @@ public class ChiTietHoaDonEntity implements Serializable {
         this.TheLoai = TheLoai;
         this.SoLuong = SoLuong;
         this.GiaTien = GiaTien;
+    }
+
+    public int getIDChiTiet() {
+        return IDChiTiet;
+    }
+
+    public void setIDChiTiet(int IDChiTiet) {
+        this.IDChiTiet = IDChiTiet;
     }
 
     public HoaDonEntity getHoaDonEntity() {
@@ -121,6 +142,12 @@ public class ChiTietHoaDonEntity implements Serializable {
         this.GiaTien = GiaTien;
     }
 
-   
+    public List<ChiTietTraHangEntity> getListHDCT_TraH() {
+        return _ListHDCT_TraH;
+    }
+
+    public void setListHDCT_TraH(List<ChiTietTraHangEntity> _ListHDCT_TraH) {
+        this._ListHDCT_TraH = _ListHDCT_TraH;
+    }
 
 }

@@ -29,7 +29,7 @@ public class ChiTietHoaDonService implements InterfaceService<ChiTietHoaDonModel
     public List<ChiTietHoaDonModel> Select() {
          var chiTietHD = _IRepoo.selectAll();
          for (ChiTietHoaDonEntity x : chiTietHD) {
-             _ListCTHD.add(new ChiTietHoaDonModel(x.getHoaDonEntity(), x.getSanPhamEntity(), x.getTenSP(), x.getSize(), x.getMau(), x.getTenHang(), x.getTheLoai(), x.getSoLuong(), x.getGiaTien()));
+             _ListCTHD.add(new ChiTietHoaDonModel(x.getIDChiTiet(), x.getHoaDonEntity(), x.getSanPhamEntity(), x.getTenSP(), x.getSize(), x.getMau(), x.getTenHang(), x.getTheLoai(), x.getSoLuong(), x.getGiaTien()));
         }
          return _ListCTHD;
          
@@ -42,8 +42,8 @@ public class ChiTietHoaDonService implements InterfaceService<ChiTietHoaDonModel
 
     @Override
     public ChiTietHoaDonModel createNew(ChiTietHoaDonModel chiTietHD) {
-       var x = _IRepoo.save(new ChiTietHoaDonEntity(chiTietHD.getHoaDonEntity(), chiTietHD.getSanPhamEntity(), chiTietHD.getTenSP(), chiTietHD.getSize(), chiTietHD.getMau(), chiTietHD.getTenHang(), chiTietHD.getTheLoai(), chiTietHD.getSoLuong(), chiTietHD.getGiaTien()));
-        return new ChiTietHoaDonModel(x.getHoaDonEntity(), x.getSanPhamEntity(), x.getTenSP(), x.getSize(), x.getMau(), x.getTenHang(), x.getTheLoai(), x.getSoLuong(), x.getGiaTien());
+       var x = _IRepoo.save(new ChiTietHoaDonEntity(chiTietHD.getIDChiTiet(),chiTietHD.getHoaDonEntity(), chiTietHD.getSanPhamEntity(), chiTietHD.getTenSP(), chiTietHD.getSize(), chiTietHD.getMau(), chiTietHD.getTenHang(), chiTietHD.getTheLoai(), chiTietHD.getSoLuong(), chiTietHD.getGiaTien()));
+        return new ChiTietHoaDonModel(x.getIDChiTiet(),x.getHoaDonEntity(), x.getSanPhamEntity(), x.getTenSP(), x.getSize(), x.getMau(), x.getTenHang(), x.getTheLoai(), x.getSoLuong(), x.getGiaTien());
     }
 
     @Override
@@ -53,7 +53,7 @@ public class ChiTietHoaDonService implements InterfaceService<ChiTietHoaDonModel
 
     @Override
     public int deleteById(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return _IRepoo.delete(id);
     }
 
     @Override
@@ -61,6 +61,5 @@ public class ChiTietHoaDonService implements InterfaceService<ChiTietHoaDonModel
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-   
     
 }

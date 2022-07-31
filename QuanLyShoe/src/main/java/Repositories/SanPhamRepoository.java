@@ -10,6 +10,7 @@ import org.hibernate.Session;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.TypedQuery;
+import org.hibernate.Transaction;
 
 /**
  *
@@ -37,8 +38,22 @@ public class SanPhamRepoository implements IRepoository<SanPhamEntity> {
     }
 
     @Override
-    public SanPhamEntity save(SanPhamEntity KeyType) {
-        return null;
+    public SanPhamEntity save(SanPhamEntity sanPham) {
+         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Transaction trans = session.getTransaction();
+            trans.begin();
+            try {
+                session.saveOrUpdate(sanPham);
+                trans.commit();
+            } catch (Exception e) {
+                e.printStackTrace();
+                trans.rollback();
+                sanPham = null;
+            }
+        } finally {
+            return sanPham;
+        }
+        
     }
 
     @Override

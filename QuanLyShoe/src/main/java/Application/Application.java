@@ -6,7 +6,6 @@
 package Application;
 
 import Views.QL_BanGiay;
-import Views.TraHang;
 
 public class Application {
     

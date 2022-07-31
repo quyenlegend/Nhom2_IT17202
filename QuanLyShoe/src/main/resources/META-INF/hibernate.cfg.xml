@@ -11,7 +11,7 @@
         </property>
 
         <property name="connection.url">
-            jdbc:sqlserver://localhost:1433;databaseName=QL_DUAN_BanShoe;
+            jdbc:sqlserver://localhost:1433;databaseName=DuAN1_GiayNam;
         </property>
 
         <property name="connection.username">sa</property>
@@ -37,10 +37,14 @@
         <mapping class="DomainModels.ChiTietHoaDonEntity" />
         <mapping class="DomainModels.SanPhamEntity" />
         
-         <mapping class="DomainModels.HangEntity" />
-          <mapping class="DomainModels.MauSacEntity" />
-           <mapping class="DomainModels.SizeEntity" />
-            <mapping class="DomainModels.TheLoaiEntity" />
+        <mapping class="DomainModels.HangEntity" />
+        <mapping class="DomainModels.MauSacEntity" />
+        <mapping class="DomainModels.SizeEntity" />
+        <mapping class="DomainModels.TheLoaiEntity" />
+            
+        <mapping class="DomainModels.DoiTraHangEntity" />
+        <mapping class="DomainModels.ChiTietTraHangEntity" />
+
              
 
     </session-factory>
