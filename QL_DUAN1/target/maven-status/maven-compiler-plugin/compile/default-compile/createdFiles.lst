@@ -1,0 +1,17 @@
+Models\KhachHangModel.class
+services\QLALL.class
+Views\QLKHForm$2.class
+Utils\HibernateUtils.class
+Views\QLKHForm$3.class
+Application\Application$1.class
+Utils\Migrator.class
+Utils\JpaUtils.class
+Application\Application.class
+DAO\KhachHangDAO.class
+Views\QLKHForm$5.class
+Views\QLKHForm$4.class
+services\QLKhachHang.class
+Entities\KhachHang.class
+DAO\AllDAO.class
+Views\QLKHForm.class
+Views\QLKHForm$1.class
