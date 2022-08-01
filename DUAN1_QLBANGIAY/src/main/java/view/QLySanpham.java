@@ -6,6 +6,7 @@ package view;
 
 import entities.HangSX;
 import entities.MauSac;
+import entities.SanPham;
 import entities.Size;
 import entities.TheLoai;
 import java.awt.Image;
@@ -47,7 +48,13 @@ public class QLySanpham extends javax.swing.JFrame {
     private final IHangSXService hangService;
     private final IMauSacService msService;
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/YYYY");
-    private QLTheLoai TL;
+    private QLyTheLoai TL;
+    private QLyHangSX hSX;
+    private QLySize size;
+    private QLyMauSac mau;
+      List<QLSanPham> Tim;
+      File fTenAnh;
+      String duongDanAnh = "D:\\DUAN1\\DUAN1_QLBANGIAY\\src\\main\\java\\image\\"+fTenAnh;
     
     /**
      * Creates new form QLySanpham
@@ -65,6 +72,8 @@ public class QLySanpham extends javax.swing.JFrame {
         loadDataToComBoHang();
         loadDataToComBoMS();
         loadDataToComBoTL();
+        //cboTimSize.setVisible(false);
+
         //loadComBoMS();
         //chkTimKiemItemStateChanged(evt);
     }
@@ -92,8 +101,29 @@ public class QLySanpham extends javax.swing.JFrame {
         }
         
     }
+    private void loadDataToTableCBO(){
+        DefaultTableModel dtm = (DefaultTableModel) this.tblSanPham.getModel();
+        dtm.setRowCount(0);
+        for (QLSanPham product : Tim) {
+            Object[] rowData = {
+                product.getMaSP(),
+                product.getHangSXId(),
+                product.getTheLoaiID(),
+                product.getMaSizeId(),
+                product.getMauSacId(),
+                product.getTenSP(),
+                dateFormat.format(product.getNgayNhap()),
+                product.getGia(),
+                product.getSoLuong(),
+                product.getAnh(),
+                product.isTrangThai()//==?"Active":"Inactive"
+            };
+            
+            dtm.addRow(rowData);
+        }
+    }
     
-    private void loadDataToComBoTL(){
+    public void loadDataToComBoTL(){
         List<TheLoai> Theloai = TheloaiService.getAllTheLoai();
         cboTL.setModel(new DefaultComboBoxModel((Theloai.toArray())));
     }
@@ -115,16 +145,7 @@ public class QLySanpham extends javax.swing.JFrame {
     }
     
     
-    private int findIndexComboboxById(int id) {
-//        int total = this.cboTL.getMaximumRowCount();
-//        for(int i = 0; i < total; i++) {
-//           TheLoai theLoai = String.valueOf(this.cboTL.getItemAt(i));
-//            if (id == theLoai.getMaTL()) {
-//                return i;
-//            }
-//        }
-        return -1;
-    }
+    
     
     public ImageIcon ResizeImage(String ImagePath){
         ImageIcon MyImage = new ImageIcon(ImagePath);
@@ -170,12 +191,54 @@ public class QLySanpham extends javax.swing.JFrame {
         MauSac mauSac = (MauSac) this.cboMS.getSelectedItem();
         qlProduct.setMauSacId(mauSac);
         
+        qlProduct.setAnh(duongDanAnh);
         return qlProduct;
     }
     
     private String getSanPhamIdFromSelectedRow() {
         int selectedRowIndex = tblSanPham.getSelectedRow();
         return String.valueOf(tblSanPham.getValueAt(selectedRowIndex, 0).toString());
+    }
+    
+    private int findIndexComboboxById(int id) {
+        int total = this.cboTL.getMaximumRowCount();
+        for(int i = 0; i < total; i++) {
+           TheLoai theLoai = this.cboTL.getItemAt(i);
+            if (id == theLoai.getMaTL()) {
+                return i;
+            }
+        }
+        return -1;
+    }
+    private int findIndexComboHangById(int id) {
+        int total = cboHang.getMaximumRowCount();
+        for(int i = 0; i < total; i++) {
+           HangSX hangSX = cboHang.getItemAt(i);
+            if (id == hangSX.getMaHangSX()) {
+                return i;
+            }
+        }
+        return -1;
+    }
+    private int findIndexComboSizeById(int id) {
+        int total = cboSize.getMaximumRowCount();
+        for(int i = 0; i < total; i++) {
+           Size size = cboSize.getItemAt(i);
+            if (id == size.getMaSize()) {
+                return i;
+            }
+        }
+        return -1;
+    }
+    private int findIndexComboMSById(int id) {
+        int total = cboMS.getMaximumRowCount();
+        for(int i = 0; i < total; i++) {
+           MauSac mauSac = cboMS.getItemAt(i);
+            if (id == mauSac.getMaMS()) {
+                return i;
+            }
+        }
+        return -1;
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -222,16 +285,16 @@ public class QLySanpham extends javax.swing.JFrame {
         txtNgayNhap = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnInActive = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         txtTimTen = new javax.swing.JTextField();
         cboTimMS = new javax.swing.JComboBox<>();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
+        btlDM = new javax.swing.JButton();
+        btnHang = new javax.swing.JButton();
+        btnMS = new javax.swing.JButton();
+        btnSize = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
-        jButton11 = new javax.swing.JButton();
+        btnActive = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         rdoINActive = new javax.swing.JRadioButton();
         rdoActive = new javax.swing.JRadioButton();
@@ -291,7 +354,7 @@ public class QLySanpham extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Mã SP", "HangSX", "Loại SP", "Size", "Màu Sắc", "TênSP", "Ngày Nhập", "Đơn Giá", "Số Lượng"
+                "Mã SP", "HangSX", "Loại SP", "Size", "Màu Sắc", "TênSP", "Ngày Nhập", "Đơn Giá", "Số Lượng", "Ảnh", "trạng Thái"
             }
         ));
         tblSanPham.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -360,7 +423,12 @@ public class QLySanpham extends javax.swing.JFrame {
             }
         });
 
-        jButton4.setText("jButton4");
+        btnInActive.setText("InActive");
+        btnInActive.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInActiveActionPerformed(evt);
+            }
+        });
 
         jButton5.setText("Tìm Kiếm");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -369,28 +437,49 @@ public class QLySanpham extends javax.swing.JFrame {
             }
         });
 
+        cboTimMS.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Màu Sắc" }));
         cboTimMS.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cboTimMSItemStateChanged(evt);
             }
         });
 
-        jButton6.setText("+");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        btlDM.setText("+");
+        btlDM.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                btlDMActionPerformed(evt);
             }
         });
 
-        jButton7.setText("+");
+        btnHang.setText("+");
+        btnHang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHangActionPerformed(evt);
+            }
+        });
 
-        jButton8.setText("+");
+        btnMS.setText("+");
+        btnMS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMSActionPerformed(evt);
+            }
+        });
 
-        jButton9.setText("+");
+        btnSize.setText("+");
+        btnSize.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSizeActionPerformed(evt);
+            }
+        });
 
         jButton10.setText("RESET");
 
-        jButton11.setText("jButton11");
+        btnActive.setText("Active");
+        btnActive.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActiveActionPerformed(evt);
+            }
+        });
 
         jLabel10.setText("Trạng Thái");
 
@@ -436,10 +525,10 @@ public class QLySanpham extends javax.swing.JFrame {
                                     .addComponent(cboMS, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton6)
-                            .addComponent(jButton7)
-                            .addComponent(jButton8)
-                            .addComponent(jButton9))
+                            .addComponent(btlDM)
+                            .addComponent(btnHang)
+                            .addComponent(btnMS)
+                            .addComponent(btnSize))
                         .addGap(68, 68, 68)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel6Layout.createSequentialGroup()
@@ -454,12 +543,12 @@ public class QLySanpham extends javax.swing.JFrame {
                                         .addGap(51, 51, 51)
                                         .addComponent(btnChoose)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jButton11)))
+                                        .addComponent(btnActive)))
                                 .addGap(18, 18, 18)
-                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton3)
-                                    .addComponent(jButton4)
-                                    .addComponent(jButton5))
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnInActive, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(42, 42, 42))
                             .addGroup(jPanel6Layout.createSequentialGroup()
                                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -536,22 +625,22 @@ public class QLySanpham extends javax.swing.JFrame {
                             .addComponent(jLabel3)
                             .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(cboTL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jButton6)))
+                                .addComponent(btlDM)))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
                             .addComponent(cboHang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton7))
+                            .addComponent(btnHang))
                         .addGap(21, 21, 21)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
                             .addComponent(cboMS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton8))
+                            .addComponent(btnMS))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
                             .addComponent(cboSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton9))
+                            .addComponent(btnSize))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
@@ -573,8 +662,8 @@ public class QLySanpham extends javax.swing.JFrame {
                                     .addComponent(jButton10))
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jButton4)
-                                    .addComponent(jButton11))))
+                                    .addComponent(btnInActive)
+                                    .addComponent(btnActive))))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel8)
@@ -622,39 +711,71 @@ public class QLySanpham extends javax.swing.JFrame {
 
     private void tblSanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSanPhamMouseClicked
         // TODO add your handling code here:
-        int row =tblSanPham.getSelectedRow();
-        String MaSp = tblSanPham.getValueAt(row, 0).toString();
-        String MaHangSX = tblSanPham.getValueAt(row, 1).toString();
-        TheLoai theLoai = (TheLoai) this.tblSanPham.getValueAt(row, 2);
+        //showDetail(tblSanPham.getSelectedRow());
+        int row = tblSanPham.getSelectedRow();
+        String MaSP = tblSanPham.getValueAt(row, 0).toString();
+        HangSX hangSX = (HangSX)tblSanPham.getValueAt(row, 1);
+        TheLoai loaiSP = (TheLoai)tblSanPham.getValueAt(row, 2);
+        Size size = (Size)tblSanPham.getValueAt(row, 3);
+        MauSac maMS = (MauSac)tblSanPham.getValueAt(row, 4);
+        String tenSP = tblSanPham.getValueAt(row, 5).toString();
+        String ngayNhap = tblSanPham.getValueAt(row, 6).toString();
+        String donGia = tblSanPham.getValueAt(row, 7).toString();
+        String soLuong = tblSanPham.getValueAt(row, 8).toString();
+        String anh = tblSanPham.getValueAt(row, 9).toString();
+        String status = tblSanPham.getValueAt(row, 10).toString();
         
-        String MaSize = tblSanPham.getValueAt(row, 3).toString();
-        String MaMS = tblSanPham.getValueAt(row, 4).toString();
-        String TenSP = tblSanPham.getValueAt(row, 5).toString();
-        String NgayNhap = tblSanPham.getValueAt(row, 6).toString();
-        String DonGia = tblSanPham.getValueAt(row, 7).toString();
-        String SoLuong = tblSanPham.getValueAt(row, 8).toString();
+        txtMaSP.setText(MaSP);
+        txtTenSP.setText(tenSP);
+        txtSoluong.setText(soLuong);
+        txtDonGia.setText(donGia);
+        txtNgayNhap.setText(ngayNhap);
+        //radio
+        if(status.equalsIgnoreCase("Active")){
+            rdoActive.setSelected(true);
+            rdoINActive.setSelected(false);
+        }else{
+            rdoActive.setSelected(false);
+            rdoINActive.setSelected(true);
+        }
+        //combobox
+//        int i = 0;
+//        while(true){
+//            String nameTL = cboTL.getItemAt(i).toString();
+//            if(nameTL.equalsIgnoreCase(loaiSP)){
+//                cboTL.setSelectedIndex(i);
+//                break;
+//            }
+//            i++;
+//        }
+            int tlIndex = findIndexComboboxById(loaiSP.getMaTL());
+            cboTL.setSelectedIndex(tlIndex);
+            
+            int hangIndex = findIndexComboHangById(hangSX.getMaHangSX());
+            cboHang.setSelectedIndex(hangIndex);
+            
+            int sizeIndex = findIndexComboSizeById(size.getMaSize());
+            cboSize.setSelectedIndex(sizeIndex);
+            
+            int msIndex = findIndexComboMSById(maMS.getMaMS());
+            cboMS.setSelectedIndex(msIndex);
         
-        txtMaSP.setText(MaSp);
-        txtTenSP.setText(TenSP);
-        txtNgayNhap.setText(NgayNhap);
-        txtDonGia.setText(DonGia);
-        txtSoluong.setText(SoLuong);
-        cboTL.setSelectedItem(theLoai);
-        
+
     }//GEN-LAST:event_tblSanPhamMouseClicked
 
     private void btnChooseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChooseActionPerformed
         // TODO add your handling code here:
         try {
-          String duongDanAnh = "D:\\DUAN1\\DUAN1_QLBANGIAY\\src\\main\\java\\image\\giay1.jpg";
+          
         JFileChooser file = new JFileChooser("D//");
         file.setDialogTitle("Mở File");
         file.showOpenDialog(null);
-        File fTenAnh = file.getSelectedFile();
+         fTenAnh = file.getSelectedFile();
         duongDanAnh = fTenAnh.getAbsolutePath();
             if(duongDanAnh != null){
                 lblAnh.setIcon(ResizeImage(String.valueOf(duongDanAnh)));
                 System.out.println(duongDanAnh);
+                //System.out.println(fTenAnh);
             }  
         } catch (Exception e) {
             e.printStackTrace();
@@ -736,10 +857,21 @@ public class QLySanpham extends javax.swing.JFrame {
         // TODO add your handling code here:
         
         try {
-            int MaMS= cboTimMS.getSelectedIndex();
-            if(ProductService.getProductByMaMS(MaMS) != null){
-                loadDataToTable();
+            List<QLSanPham> list = ProductService.getProducts();
+                for (QLSanPham x : list) {
+                    if(x.getMauSacId().getMaMS()==cboTimMS.getSelectedIndex()){
+                        Tim.add(x);
+                        
+                    }
+                
             }
+             loadDataToTableCBO();
+            
+//            int MaMS = cboTimMS.getSelectedIndex();
+//            //String MaMS = (String) cboTimMS.getSelectedItem().toString();
+//            if(ProductService.getProductByMaMS(MaMS) != null){
+//                System.out.println("mã"+ MaMS);
+//            }
             
             
         } catch (Exception e) {
@@ -751,6 +883,7 @@ public class QLySanpham extends javax.swing.JFrame {
         // TODO add your handling code here:
         String MaSP = txtTimMa.getText();
         if(MaSP.length()==0){
+            JOptionPane.showMessageDialog(this, "Bạn Chưa nhập Mã SP");
             loadDataToTable();
         }else{
         List<QLSanPham> ds = ProductService.getProductById(MaSP);
@@ -777,11 +910,78 @@ public class QLySanpham extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButton5ActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    private void btlDMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btlDMActionPerformed
         // TODO add your handling code here:
-        TL = new QLTheLoai();
+        TL = new QLyTheLoai();
         TL.setVisible(true);
-    }//GEN-LAST:event_jButton6ActionPerformed
+        //TL.setDefaultCloseOperation(TL.EXIT_ON_CLOSE));
+    }//GEN-LAST:event_btlDMActionPerformed
+
+    private void btnHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHangActionPerformed
+        // TODO add your handling code here:
+        hSX=new QLyHangSX();
+        hSX.setVisible(true);
+    }//GEN-LAST:event_btnHangActionPerformed
+
+    private void btnActiveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActiveActionPerformed
+        // TODO add your handling code here:
+        List<QLSanPham> ds = ProductService.getProductsActive();
+        DefaultTableModel dtm = (DefaultTableModel) this.tblSanPham.getModel();
+        dtm.setRowCount(0);
+        for (QLSanPham product : ds) {
+            Object[] rowData = {
+                product.getMaSP(),
+                product.getHangSXId(),
+                product.getTheLoaiID(),
+                product.getMaSizeId(),
+                product.getMauSacId(),
+                product.getTenSP(),
+                dateFormat.format(product.getNgayNhap()),
+                product.getGia(),
+                product.getSoLuong(),
+                product.getAnh(),
+                product.isTrangThai()//==?"Active":"Inactive"
+            };
+            
+            dtm.addRow(rowData);
+        }
+    }//GEN-LAST:event_btnActiveActionPerformed
+
+    private void btnInActiveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInActiveActionPerformed
+        // TODO add your handling code here:
+        List<QLSanPham> ds = ProductService.getProductsinActive();
+        DefaultTableModel dtm = (DefaultTableModel) this.tblSanPham.getModel();
+        dtm.setRowCount(0);
+        for (QLSanPham product : ds) {
+            Object[] rowData = {
+                product.getMaSP(),
+                product.getHangSXId(),
+                product.getTheLoaiID(),
+                product.getMaSizeId(),
+                product.getMauSacId(),
+                product.getTenSP(),
+                dateFormat.format(product.getNgayNhap()),
+                product.getGia(),
+                product.getSoLuong(),
+                product.getAnh(),
+                product.isTrangThai()//==?"Active":"Inactive"
+            };
+            
+            dtm.addRow(rowData);
+        }
+    }//GEN-LAST:event_btnInActiveActionPerformed
+
+    private void btnMSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMSActionPerformed
+        // TODO add your handling code here:
+        mau = new QLyMauSac();
+        mau.setVisible(true);
+    }//GEN-LAST:event_btnMSActionPerformed
+
+    private void btnSizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSizeActionPerformed
+        // TODO add your handling code here:
+        size = new QLySize();
+        size.setVisible(true);
+    }//GEN-LAST:event_btnSizeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -819,12 +1019,18 @@ public class QLySanpham extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btlDM;
+    private javax.swing.JButton btnActive;
     private javax.swing.JButton btnChoose;
+    private javax.swing.JButton btnHang;
+    private javax.swing.JButton btnInActive;
+    private javax.swing.JButton btnMS;
+    private javax.swing.JButton btnSize;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JComboBox<String> cboHang;
-    private javax.swing.JComboBox<String> cboMS;
-    private javax.swing.JComboBox<String> cboSize;
-    private javax.swing.JComboBox<String> cboTL;
+    private javax.swing.JComboBox<HangSX> cboHang;
+    private javax.swing.JComboBox<MauSac> cboMS;
+    private javax.swing.JComboBox<Size> cboSize;
+    private javax.swing.JComboBox<TheLoai> cboTL;
     private javax.swing.JComboBox<String> cboTimMS;
     private javax.swing.JComboBox<String> cboTimSize;
     private javax.swing.JCheckBox chkTimKiem;
@@ -833,15 +1039,9 @@ public class QLySanpham extends javax.swing.JFrame {
     private javax.swing.JCheckBox chkTimSize;
     private javax.swing.JCheckBox chkTimTen;
     private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;

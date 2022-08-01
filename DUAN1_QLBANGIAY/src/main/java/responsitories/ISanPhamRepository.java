@@ -13,6 +13,8 @@ import java.util.List;
  */
 public interface ISanPhamRepository {
     List<SanPham> fildAll();
+    List<SanPham> fildAllActive();
+    List<SanPham> fildAllInActive();
     SanPham save(SanPham sanpham);
     SanPham findById(String id);
     SanPham findByName(String TenSP);

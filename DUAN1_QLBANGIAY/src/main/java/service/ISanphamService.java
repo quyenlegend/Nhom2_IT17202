@@ -14,6 +14,8 @@ import model.QLSanPham;
  */
 public interface ISanphamService {
     List<QLSanPham> getProducts();
+    List<QLSanPham> getProductsActive();
+    List<QLSanPham> getProductsinActive();
     
     //QLSanPham getProductById(String id);
      List<QLSanPham>getProductById(String id);

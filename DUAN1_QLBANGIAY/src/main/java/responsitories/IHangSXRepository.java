@@ -13,4 +13,6 @@ import java.util.List;
  */
 public interface IHangSXRepository {
     List<HangSX> findAll();
+    HangSX save(HangSX hangSX);
+    HangSX findByName(String name);
 }

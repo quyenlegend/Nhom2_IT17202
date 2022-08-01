@@ -13,4 +13,6 @@ import java.util.List;
  */
 public interface ISizeRepository {
     List<Size> findAll();
+    Size save(Size size);
+    Size findByName(String name);
 }

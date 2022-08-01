@@ -32,6 +32,16 @@ public class Size implements Serializable{
 	@OneToMany(mappedBy="maSizeId")
 	private List<SanPham> sanpham;
 
+    public Size() {
+    }
+
+    public Size(int MaSize, String Size) {
+        this.MaSize = MaSize;
+        this.Size = Size;
+    }
+        
+        
+
     public int getMaSize() {
         return MaSize;
     }
@@ -40,12 +50,12 @@ public class Size implements Serializable{
         this.MaSize = MaSize;
     }
 
-    public String getKieuSize() {
+    public String getSize() {
         return Size;
     }
 
-    public void setKieuSize(String KieuSize) {
-        this.Size = KieuSize;
+    public void setSize(String Size) {
+        this.Size = Size;
     }
 
     public List<SanPham> getSanpham() {

@@ -33,6 +33,16 @@ public class TheLoai implements Serializable{
 	@OneToMany(mappedBy="TheLoaiID")
 	private List<SanPham> sanpham;
 
+    public TheLoai() {
+    }
+
+    public TheLoai(int MaTL, String TenLoai) {
+        this.MaTL = MaTL;
+        this.TenLoai = TenLoai;
+    }
+
+    
+        
     public int getMaTL() {
         return MaTL;
     }

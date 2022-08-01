@@ -6,6 +6,7 @@ package service;
 
 import entities.MauSac;
 import java.util.List;
+import model.QlMauSac;
 
 /**
  *
@@ -13,4 +14,7 @@ import java.util.List;
  */
 public interface IMauSacService {
     List<MauSac> getAllMauSac();
+    List<QlMauSac> getProducts();
+    QlMauSac createNewMS(QlMauSac mauSac);
+    List<QlMauSac>getProductByName(String name);
 }

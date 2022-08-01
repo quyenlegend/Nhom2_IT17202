@@ -77,7 +77,7 @@ public class SanPhamRepository implements ISanPhamRepository{
     public SanPham findByMS(int MaMS) {
         SanPham sanpham;
        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            String hql = "SELECT p FROM SANPHAM p WHERE p.MaMS = :MaMS ";
+            String hql = "SELECT p FROM SANPHAM p WHERE p.mauSacId = :MaMS ";
             TypedQuery<SanPham> query = session.createQuery(hql, SanPham.class);
             query.setParameter("MaMS", MaMS);
             sanpham = query.getSingleResult();
@@ -88,6 +88,46 @@ public class SanPhamRepository implements ISanPhamRepository{
     @Override
     public SanPham findBYSize(int MaSize) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public List<SanPham> fildAllActive() {
+        List<SanPham> sanpham;
+        try 
+            (Session session = HibernateUtil.getSessionFactory().openSession()){
+//            String hql = "select p.MaSP, h.TenHang, t.TenLoai, m.TenMau,"
+//                        +"s.Size, p.TenSP, p.NgayNhap, p.Gia,\n" 
+//                        +"p.SoLuong, p.Anh, p.TrangThai \n" 
+//                        +"from SANPHAM as p inner join HANGSX as h on p.MaHangSX = h.MaHangSX\n" 
+//                        +"inner join THELOAI as t on p.MaTL = t.MaTL\n" 
+//                        +"inner join MAUSAC as m on p.MaMS = m.MaMS\n" 
+//                        +"inner join SIZE as s  on p.MaSize = s.MaSize";
+//            
+            String hql = "select p from SANPHAM p where TrangThai = 0" ;
+            TypedQuery<SanPham> query = session.createQuery(hql, SanPham.class);
+            sanpham = query.getResultList();
+        } 
+        return sanpham;
+    }
+
+    @Override
+    public List<SanPham> fildAllInActive() {
+        List<SanPham> sanpham;
+        try 
+            (Session session = HibernateUtil.getSessionFactory().openSession()){
+//            String hql = "select p.MaSP, h.TenHang, t.TenLoai, m.TenMau,"
+//                        +"s.Size, p.TenSP, p.NgayNhap, p.Gia,\n" 
+//                        +"p.SoLuong, p.Anh, p.TrangThai \n" 
+//                        +"from SANPHAM as p inner join HANGSX as h on p.MaHangSX = h.MaHangSX\n" 
+//                        +"inner join THELOAI as t on p.MaTL = t.MaTL\n" 
+//                        +"inner join MAUSAC as m on p.MaMS = m.MaMS\n" 
+//                        +"inner join SIZE as s  on p.MaSize = s.MaSize";
+//            
+            String hql = "select p from SANPHAM p where TrangThai = 1" ;
+            TypedQuery<SanPham> query = session.createQuery(hql, SanPham.class);
+            sanpham = query.getResultList();
+        } 
+        return sanpham;
     }
 
     

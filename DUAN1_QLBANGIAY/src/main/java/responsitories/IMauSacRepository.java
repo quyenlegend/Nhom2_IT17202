@@ -13,4 +13,6 @@ import java.util.List;
  */
 public interface IMauSacRepository {
     List<MauSac> findAll();
+    MauSac save(MauSac theLoai);
+    MauSac findByName(String name);
 }

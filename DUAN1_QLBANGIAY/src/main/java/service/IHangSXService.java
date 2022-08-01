@@ -6,6 +6,7 @@ package service;
 
 import entities.HangSX;
 import java.util.List;
+import model.QLHangSX;
 
 /**
  *
@@ -13,4 +14,7 @@ import java.util.List;
  */
 public interface IHangSXService {
     List<HangSX> getAllHangSX();
+    List<QLHangSX> getProducts();
+    QLHangSX createNewTL(QLHangSX theLoai);
+    List<QLHangSX>getProductByName(String name);
 }

@@ -91,19 +91,19 @@ public class Thongke extends javax.swing.JFrame {
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Chức Năng"));
 
-        jButton4.setText("Khach Hang");
+        jButton4.setText("Hoa Don");
 
-        jButton8.setText("Khach Hang");
+        jButton8.setText("Nhan Vien");
 
-        jButton9.setText("Khach Hang");
+        jButton9.setText("San Pham");
 
         jButton10.setText("Khach Hang");
 
-        jButton11.setText("Khach Hang");
+        jButton11.setText("Doi Tra Hang");
 
-        jButton12.setText("Khach Hang");
+        jButton12.setText("Thong Ke");
 
-        jButton13.setText("Khach Hang");
+        jButton13.setText("Dang Xuat");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -120,7 +120,7 @@ public class Thongke extends javax.swing.JFrame {
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap(30, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -150,7 +150,7 @@ public class Thongke extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Tên SP", "Loại SP", "Màu Sắc", "Size", "Số Lượng", "Đơn Giá", "Ngày Nhập", "Tiền trả khách", "Doanh Thu"
+                "Tên SP", "Loại SP", "Màu Sắc", "Size", "Số Lượng", "Đơn Giá", "Ngày Tao", "Tiền trả khách", "Doanh Thu"
             }
         ));
         jScrollPane1.setViewportView(jTable1);

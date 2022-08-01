@@ -4,11 +4,14 @@
  */
 package responsitories;
 
+import Utilities.HibernateUtil;
 import Utilities.JpaUtils;
 import entities.HangSX;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 /**
  *
@@ -25,6 +28,36 @@ public class HangSXRepository implements IHangSXRepository{
         TypedQuery<HangSX> query = em.createQuery(hql, HangSX.class);
         hang = query.getResultList();
         return hang;
+    }
+
+    @Override
+    public HangSX save(HangSX hangSX) {
+         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Transaction trans = session.getTransaction();
+            trans.begin();
+            try {
+                session.saveOrUpdate(hangSX);
+                trans.commit();
+            } catch (Exception e) {
+                e.printStackTrace();
+                trans.rollback();
+                hangSX = null;
+            }
+        } finally {
+            return hangSX;
+        }
+    }
+
+    @Override
+    public HangSX findByName(String name) {
+       HangSX hangSX;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "SELECT h FROM HANGSX h WHERE TenHang = :name ";
+            TypedQuery<HangSX> query = session.createQuery(hql, HangSX.class);
+            query.setParameter("name", name);
+            hangSX = query.getSingleResult();
+        }
+        return hangSX;
     }
     
 }

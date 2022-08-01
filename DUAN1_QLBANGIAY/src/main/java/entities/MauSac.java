@@ -32,6 +32,13 @@ public class MauSac implements Serializable{
 	@OneToMany(mappedBy="mauSacId")
 	private List<SanPham> sanpham;
 
+    public MauSac() {
+    }
+
+    public MauSac(int MaMS, String TenMau) {
+        this.MaMS = MaMS;
+        this.TenMau = TenMau;
+    }
 
     public int getMaMS() {
         return MaMS;

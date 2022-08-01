@@ -37,5 +37,7 @@
         <mapping class="entities.HangSX" />
         <mapping class="entities.MauSac" />
         <mapping class="entities.Size" />
+        <mapping class="entities.HoaDon" />
+        <mapping class="entities.HoaDonChiTiet" />
     </session-factory>
 </hibernate-configuration>

@@ -77,6 +77,30 @@ public class SanphamService implements ISanphamService{
             );
     }
 
+    @Override
+    public List<QLSanPham> getProductsActive() {
+        lstSP = new ArrayList<>();
+        var sanpham = spRepository.fildAllActive();
+        for(SanPham sp: sanpham){
+            lstSP.add(new QLSanPham(sp.getMaSP(),sp.getHangSXId(),sp.getTheLoaiID(),sp.getMaSizeId(),
+                    sp.getMauSacId(),sp.getTenSP(),sp.getNgayNhap(),sp.getGia(),sp.getSoLuong(),sp.getAnh(),sp.isTrangThai()
+            ));
+        }
+        return lstSP;
+    }
+
+    @Override
+    public List<QLSanPham> getProductsinActive() {
+        lstSP = new ArrayList<>();
+        var sanpham = spRepository.fildAllInActive();
+        for(SanPham sp: sanpham){
+            lstSP.add(new QLSanPham(sp.getMaSP(),sp.getHangSXId(),sp.getTheLoaiID(),sp.getMaSizeId(),
+                    sp.getMauSacId(),sp.getTenSP(),sp.getNgayNhap(),sp.getGia(),sp.getSoLuong(),sp.getAnh(),sp.isTrangThai()
+            ));
+        }
+        return lstSP;
+    }
+
     
 
     

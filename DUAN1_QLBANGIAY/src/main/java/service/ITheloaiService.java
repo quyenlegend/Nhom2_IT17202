@@ -6,6 +6,7 @@ package service;
 
 import entities.TheLoai;
 import java.util.List;
+import model.QLTheLoai;
 
 /**
  *
@@ -13,4 +14,8 @@ import java.util.List;
  */
 public interface ITheloaiService {
     List<TheLoai> getAllTheLoai();
+    List<QLTheLoai> getProducts();
+    QLTheLoai createNewTL(QLTheLoai theLoai);
+    List<QLTheLoai>getProductByName(String name);
+    
 }

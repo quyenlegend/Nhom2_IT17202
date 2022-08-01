@@ -6,6 +6,7 @@ package service;
 
 import entities.Size;
 import java.util.List;
+import model.QLSize;
 
 /**
  *
@@ -13,4 +14,7 @@ import java.util.List;
  */
 public interface ISizeService {
     List<Size> getAllTheLoai();
+    List<QLSize> getProducts();
+    QLSize createNewTL(QLSize theLoai);
+    List<QLSize>getProductByName(String name);
 }

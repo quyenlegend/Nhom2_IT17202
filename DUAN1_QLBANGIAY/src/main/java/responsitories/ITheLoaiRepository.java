@@ -13,4 +13,6 @@ import java.util.List;
  */
 public interface ITheLoaiRepository {
     List<TheLoai> findAll();
+    TheLoai save(TheLoai theLoai);
+    TheLoai findByName(String name);
 }
